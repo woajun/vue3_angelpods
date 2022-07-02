@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, defineEmits } from "vue";
 import { Maps } from "@/components/kakaoTypes";
 
 const map = ref<Maps>();
 const markers = ref<number[]>();
 const infowindow = ref();
+
+const emit = defineEmits<{
+  (e: "changeSize", changeSize: (size: number) => void): void;
+}>();
 
 const initMap = function () {
   const container = document.getElementById("map");
@@ -25,6 +29,7 @@ const changeSize = function (size: number) {
   container.style.height = `${size}px`;
   map.value?.relayout();
 };
+emit("changeSize", changeSize);
 
 const displayMarker = function (markerPositions: number[][]) {
   if (markers.value && markers.value.length > 0) {
@@ -91,9 +96,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div id="map"></div>
-  </div>
+  <div id="map" />
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
-("ab");
+const doChangeSize = ref<null | ((size: number) => void)>();
+
+const changeSize = function (size: number) {
+  doChangeSize.value ? doChangeSize.value(size) : "";
+};
 </script>
 <template>
   <div>
-    <KakaoMap />
+    <KakaoMap @change-size="(e) => (doChangeSize = e)" />
     <div class="button-group">
       <button @click="changeSize(0)">Hide</button>
       <button @click="changeSize(400)">show</button>
