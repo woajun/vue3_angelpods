@@ -8,17 +8,16 @@ declare global {
 }
 
 interface Kakao {
-  maps: Maps;
+  maps: Map;
 }
 
-interface Maps {
+interface Map {
   load: (map: any) => void;
 }
 export default defineComponent({
   name: "KakaoMap",
   setup(props, context) {
-    const map = ref(null);
-    console.log(props);
+    const map = ref<Map>(null);
 
     const initMap = function () {
       const container = document.getElementById("map");
@@ -30,6 +29,14 @@ export default defineComponent({
       //지도 객체를 등록합니다.
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       map.value = new window.kakao.maps.Map(container, options);
+    };
+
+    const changeSize = function (size: number) {
+      const container = document.getElementById("map");
+      if (!container) return;
+      container.style.width = `${size}px`;
+      container.style.height = `${size}px`;
+      map.value.relayout();
     };
 
     onMounted(() => {
@@ -47,7 +54,9 @@ export default defineComponent({
       }
     });
     return {
+      //data
       map,
+      //staticData
       markerPositions1: [
         [33.452278, 126.567803],
         [33.452671, 126.574792],
@@ -64,16 +73,12 @@ export default defineComponent({
       ],
       markers: [],
       infowindow: null,
+      // methods
+      changeSize,
     };
   },
 
   methods: {
-    changeSize(size) {
-      const container = document.getElementById("map");
-      container.style.width = `${size}px`;
-      container.style.height = `${size}px`;
-      this.map.relayout();
-    },
     displayMarker(markerPositions) {
       if (this.markers.length > 0) {
         this.markers.forEach((marker) => marker.setMap(null));
