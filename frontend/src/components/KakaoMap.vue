@@ -1,20 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { Maps } from "@/components/kakaoTypes";
 
-declare global {
-  interface Window {
-    kakao: Kakao;
-  }
-}
-
-interface Kakao {
-  maps: Map;
-}
-
-interface Map {
-  load: (map: any) => void;
-}
-const map = ref<Map>();
+const map = ref<Maps>();
 const markers = ref<number[]>();
 const infowindow = ref();
 
