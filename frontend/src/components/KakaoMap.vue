@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 
 declare global {
   interface Window {
@@ -12,13 +12,42 @@ interface Kakao {
 }
 
 interface Maps {
-  load: () => void;
+  load: (map: any) => void;
 }
 export default defineComponent({
   name: "KakaoMap",
   setup(props, context) {
+    const map = ref(null);
     console.log(props);
+
+    const initMap = function () {
+      const container = document.getElementById("map");
+      const options = {
+        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+        level: 5,
+      };
+
+      //지도 객체를 등록합니다.
+      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      map.value = new window.kakao.maps.Map(container, options);
+    };
+
+    onMounted(() => {
+      if (window.kakao && window.kakao.maps) {
+        initMap();
+      } else {
+        const script = document.createElement("script");
+        /* global kakao */
+        script.onload = () => {
+          return window.kakao.maps.load(initMap);
+        };
+        script.src =
+          "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da";
+        document.head.appendChild(script);
+      }
+    });
     return {
+      map,
       markerPositions1: [
         [33.452278, 126.567803],
         [33.452671, 126.574792],
@@ -38,32 +67,7 @@ export default defineComponent({
     };
   },
 
-  mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-    } else {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => {
-        return window.kakao.maps.load(this.initMap);
-      };
-      script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da";
-      document.head.appendChild(script);
-    }
-  },
   methods: {
-    initMap() {
-      const container = document.getElementById("map");
-      const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 5,
-      };
-
-      //지도 객체를 등록합니다.
-      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
-      this.map = new kakao.maps.Map(container, options);
-    },
     changeSize(size) {
       const container = document.getElementById("map");
       container.style.width = `${size}px`;
