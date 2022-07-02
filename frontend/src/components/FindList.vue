@@ -2,8 +2,6 @@
 import AIcons from "@/components/AIcons.vue";
 import TopNav from "./TopNav.vue";
 import BottomNav from "./BottomNav.vue";
-
-console.log("a");
 </script>
 <template>
   <div>
