@@ -18,8 +18,6 @@ export default defineComponent({
   name: "KakaoMap",
   setup(props, context) {
     console.log(props);
-  },
-  data() {
     return {
       markerPositions1: [
         [33.452278, 126.567803],
