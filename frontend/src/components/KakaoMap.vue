@@ -17,7 +17,9 @@ interface Map {
 export default defineComponent({
   name: "KakaoMap",
   setup(props, context) {
-    const map = ref<Map>(null);
+    const map = ref<Map>();
+    const markers = ref<number[]>();
+    const infowindow = ref();
 
     const initMap = function () {
       const container = document.getElementById("map");
@@ -36,7 +38,55 @@ export default defineComponent({
       if (!container) return;
       container.style.width = `${size}px`;
       container.style.height = `${size}px`;
-      map.value.relayout();
+      map.value?.relayout();
+    };
+
+    const displayMarker = function (markerPositions: number[][]) {
+      if (markers.value && markers.value.length > 0) {
+        markers.value.forEach((marker) => marker.setMap(null));
+      }
+
+      const positions = markerPositions.map(
+        (position) => new window.kakao.maps.LatLng(...position)
+      );
+
+      if (positions.length > 0) {
+        markers.value = positions.map(
+          (position) =>
+            new window.kakao.maps.Marker({
+              map: map.value,
+              position,
+            })
+        );
+
+        const bounds = positions.reduce(
+          (bounds, latlng) => bounds.extend(latlng),
+          new window.kakao.maps.LatLngBounds()
+        );
+
+        map.value?.setBounds(bounds);
+      }
+    };
+
+    const displayInfoWindow = function () {
+      if (infowindow.value && infowindow.value.getMap()) {
+        //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
+        map.value?.setCenter(infowindow.value.getPosition());
+        return;
+      }
+
+      var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+        iwPosition = new window.kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
+        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+      infowindow.value = new window.kakao.maps.InfoWindow({
+        map: map.value, // 인포윈도우가 표시될 지도
+        position: iwPosition,
+        content: iwContent,
+        removable: iwRemoveable,
+      });
+
+      map.value?.setCenter(iwPosition);
     };
 
     onMounted(() => {
@@ -72,60 +122,15 @@ export default defineComponent({
         [37.49646391248451, 127.02675574250912],
       ],
       markers: [],
-      infowindow: null,
+      infowindow,
       // methods
       changeSize,
+      displayMarker,
+      displayInfoWindow,
     };
   },
 
-  methods: {
-    displayMarker(markerPositions) {
-      if (this.markers.length > 0) {
-        this.markers.forEach((marker) => marker.setMap(null));
-      }
-
-      const positions = markerPositions.map(
-        (position) => new kakao.maps.LatLng(...position)
-      );
-
-      if (positions.length > 0) {
-        this.markers = positions.map(
-          (position) =>
-            new kakao.maps.Marker({
-              map: this.map,
-              position,
-            })
-        );
-
-        const bounds = positions.reduce(
-          (bounds, latlng) => bounds.extend(latlng),
-          new kakao.maps.LatLngBounds()
-        );
-
-        this.map.setBounds(bounds);
-      }
-    },
-    displayInfoWindow() {
-      if (this.infowindow && this.infowindow.getMap()) {
-        //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
-        this.map.setCenter(this.infowindow.getPosition());
-        return;
-      }
-
-      var iwContent = '<div style="padding:5px;">Hello World!</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        iwPosition = new kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
-        iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
-      this.infowindow = new kakao.maps.InfoWindow({
-        map: this.map, // 인포윈도우가 표시될 지도
-        position: iwPosition,
-        content: iwContent,
-        removable: iwRemoveable,
-      });
-
-      this.map.setCenter(iwPosition);
-    },
-  },
+  methods: {},
 });
 </script>
 
