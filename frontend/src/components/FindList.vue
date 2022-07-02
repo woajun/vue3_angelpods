@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import AIcons from "@/components/AIcons.vue";
+
 console.log("a");
 </script>
 <template>
   <div>
     <!-- nav -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top px-3">
-      <a class="navbar-brand" href="../index.jsp">Angel Pods</a>
+      <a class="navbar-brand">Angel Pods</a>
       <div>
         <button
           class="navbar-toggler collapsed"
@@ -98,18 +100,7 @@ console.log("a");
               size="15"
             />
             <button class="btn btn-outline-dark" type="submit">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                />
-              </svg>
+              <AIcons type="search" />
             </button>
           </div>
         </form>
@@ -177,18 +168,7 @@ console.log("a");
                       aria-expanded="false"
                       aria-controls="collapseTwo"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-search"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                        ></path>
-                      </svg>
+                      <AIcons type="search" />
                       &nbsp; 검색조건을 설정해주세요.
                     </button>
                   </h2>
@@ -218,11 +198,11 @@ console.log("a");
                                   required
                                 >
                                   <option selected value="%">대분류</option>
-                                  <c:forEach items="${cList}" var="cDto">
+                                  <!-- <c:forEach items="${cList}" var="cDto">
                                     <option value="${cDto.cNum}">
                                       ${cDto.name}
                                     </option>
-                                  </c:forEach>
+                                  </c:forEach> -->
                                 </select>
                                 <select
                                   id="cdNum"
@@ -231,7 +211,7 @@ console.log("a");
                                   required
                                 >
                                   <option selected value="%">소분류</option>
-                                  <c:forEach items="${cdList}" var="cdDto">
+                                  <!-- <c:forEach items="${cdList}" var="cdDto">
                                     <option
                                       class="cdItems"
                                       value="${cdDto.cdNum}"
@@ -240,7 +220,7 @@ console.log("a");
                                     >
                                       ${cdDto.cNum}/${cdDto.needSN}
                                     </option>
-                                  </c:forEach>
+                                  </c:forEach> -->
                                 </select>
                               </div>
                             </td>
@@ -258,11 +238,11 @@ console.log("a");
                                   required
                                 >
                                   <option selected value="%">시/도</option>
-                                  <c:forEach items="${area}" var="area">
+                                  <!-- <c:forEach items="${area}" var="area">
                                     <option value="${area.sido}">
                                       ${area.sido}
                                     </option>
-                                  </c:forEach>
+                                  </c:forEach> -->
                                 </select>
                                 <select
                                   id="areaGue"
@@ -271,7 +251,7 @@ console.log("a");
                                   required
                                 >
                                   <option selected value="%">구/군</option>
-                                  <c:forEach items="${area}" var="area">
+                                  <!-- <c:forEach items="${area}" var="area">
                                     <option
                                       class="gueItems"
                                       value="${area.gue}"
@@ -280,7 +260,7 @@ console.log("a");
                                     >
                                       ${area.sido}/${area.gue}
                                     </option>
-                                  </c:forEach>
+                                  </c:forEach> -->
                                 </select>
                                 <select
                                   id="areaDong"
@@ -289,7 +269,7 @@ console.log("a");
                                   required
                                 >
                                   <option selected value="%">동/읍</option>
-                                  <c:forEach items="${area}" var="area">
+                                  <!-- <c:forEach items="${area}" var="area">
                                     <option
                                       class="dongItems"
                                       value="${area.dong}"
@@ -298,7 +278,7 @@ console.log("a");
                                     >
                                       ${area.sido}/${area.gue}/${area.dong}
                                     </option>
-                                  </c:forEach>
+                                  </c:forEach> -->
                                 </select>
                               </div>
                             </td>
@@ -343,8 +323,8 @@ console.log("a");
           <div style="position: relative; bottom: 0">
             <div id="board">
               <div class="scrollarea">
-                <c:forEach items="${list}" var="dto">
-                  <!-- <div class="boardItem list-group-item list-group-item-action py-1 mb-1">
+                <!-- <c:forEach items="${list}" var="dto"> -->
+                <!-- <div class="boardItem list-group-item list-group-item-action py-1 mb-1">
                     <div class="row">
                       <div class="col-3 align-items-center d-flex px-1">
                         <img  class="rounded"  src="${pageContext.request.contextPath}/images/findBoard/${dto.thumbnailImage}" alt="..." width=80px height=80px/>
@@ -383,7 +363,7 @@ console.log("a");
                     <input type="hidden" class = "chatHit" value="${dto.chatHit}">
                     <input type="hidden" class = "fState" value="${dto.fState}">
                   </div> -->
-                </c:forEach>
+                <!-- </c:forEach> -->
               </div>
             </div>
           </div>
@@ -399,18 +379,7 @@ console.log("a");
       onclick="curPositionBtn()"
     >
       현위치
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="currentColor"
-        class="bi bi-geo-alt-fill"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-        />
-      </svg>
+      <AIcons type="location" />
     </button>
 
     <!-- 글쓰기 버튼 -->
