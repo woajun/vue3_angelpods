@@ -1,6 +1,24 @@
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+declare global {
+  interface Window {
+    kakao: Kakao;
+  }
+}
+
+interface Kakao {
+  maps: Maps;
+}
+
+interface Maps {
+  load: () => void;
+}
+export default defineComponent({
   name: "KakaoMap",
+  setup(props, context) {
+    console.log(props);
+  },
   data() {
     return {
       markerPositions1: [
@@ -21,13 +39,16 @@ export default {
       infowindow: null,
     };
   },
+
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
       const script = document.createElement("script");
       /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
+      script.onload = () => {
+        return window.kakao.maps.load(this.initMap);
+      };
       script.src =
         "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da";
       document.head.appendChild(script);
@@ -98,7 +119,7 @@ export default {
       this.map.setCenter(iwPosition);
     },
   },
-};
+});
 </script>
 
 <template>
