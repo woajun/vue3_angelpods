@@ -4,6 +4,7 @@ import KakaoMap from "./KakaoMap.vue";
 
 const doChangeSize = ref<null | ((size: number) => void)>();
 const doDisplayMarker = ref();
+const doDisplayInfoWindow = ref();
 
 const changeSize = function (size: number) {
   doChangeSize.value ? doChangeSize.value(size) : "";
@@ -11,6 +12,10 @@ const changeSize = function (size: number) {
 
 const displayMarker = function (markerPositions: number[][]) {
   doDisplayMarker.value ? doDisplayMarker.value(markerPositions) : "";
+};
+
+const displayInfoWindow = function (content: string) {
+  doDisplayInfoWindow.value ? doDisplayInfoWindow.value(content) : "";
 };
 
 const marker1 = [
@@ -28,12 +33,15 @@ const marker2 = [
   [37.49754540521486, 127.02546694890695],
   [37.49646391248451, 127.02675574250912],
 ];
+
+const content = '<div style="padding:5px;">Hello World!</div>';
 </script>
 <template>
   <div>
     <KakaoMap
       @change-size="(e) => (doChangeSize = e)"
       @display-marker="(e) => (doDisplayMarker = e)"
+      @display-info-window="(e) => (doDisplayInfoWindow = e)"
     />
     <div class="button-group">
       <button @click="changeSize(0)">Hide</button>
@@ -41,7 +49,7 @@ const marker2 = [
       <button @click="displayMarker(marker1)">marker set 1</button>
       <button @click="displayMarker(marker2)">marker set 2</button>
       <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow">infowindow</button>
+      <button @click="displayInfoWindow(content)">infowindow</button>
     </div>
   </div>
 </template>
