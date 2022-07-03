@@ -8,6 +8,10 @@ const infowindow = ref();
 
 const emit = defineEmits<{
   (e: "changeSize", changeSize: (size: number) => void): void;
+  (
+    e: "displayMarker",
+    displayMarker: (markerPositions: number[][]) => void
+  ): void;
 }>();
 
 const initMap = function () {
@@ -57,6 +61,8 @@ const displayMarker = function (markerPositions: number[][]) {
     map.value?.setBounds(bounds);
   }
 };
+
+emit("displayMarker", displayMarker);
 
 const displayInfoWindow = function () {
   if (infowindow.value && infowindow.value.getMap()) {

@@ -3,9 +3,14 @@ import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
 
 const doChangeSize = ref<null | ((size: number) => void)>();
+const doDisplayMarker = ref();
 
 const changeSize = function (size: number) {
   doChangeSize.value ? doChangeSize.value(size) : "";
+};
+
+const displayMarker = function (markerPositions: number[][]) {
+  doDisplayMarker.value ? doDisplayMarker.value(markerPositions) : "";
 };
 
 const marker1 = [
@@ -26,7 +31,10 @@ const marker2 = [
 </script>
 <template>
   <div>
-    <KakaoMap @change-size="(e) => (doChangeSize = e)" />
+    <KakaoMap
+      @change-size="(e) => (doChangeSize = e)"
+      @display-marker="(e) => (doDisplayMarker = e)"
+    />
     <div class="button-group">
       <button @click="changeSize(0)">Hide</button>
       <button @click="changeSize(400)">show</button>
