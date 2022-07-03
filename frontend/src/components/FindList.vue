@@ -2,14 +2,14 @@
 import AIcons from "@/components/AIcons.vue";
 import TopNav from "./TopNav.vue";
 import BottomNav from "./BottomNav.vue";
+import KakaoMap from "./KakaoMap.vue";
 </script>
 <template>
   <div>
     <TopNav />
 
     <!--지도-->
-    <div id="map"></div>
-
+    <KakaoMap />
     <div id="menu_wrap" class="bg_white">
       <div class="option">
         <form onsubmit="searchPlaces(); return false;">

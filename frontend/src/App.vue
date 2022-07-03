@@ -1,19 +1,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import FindList from "@/components/FindList.vue";
-import KakaoMapTest from "./components/KakaoMapTest.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    // FindList,
-    KakaoMapTest,
+    FindList,
   },
 });
 </script>
 <template>
-  <KakaoMapTest />
-  <!-- <FindList /> -->
+  <FindList />
 </template>
 
 <style>
