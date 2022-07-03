@@ -1,16 +1,29 @@
 <script setup lang="ts">
-"a";
+import AIcons from "@/components/AIcons.vue";
+import { ref } from "vue";
+
+const keyword = ref<string>();
+
+const searchPlaces = function (_keyword: string) {
+  console.log(_keyword);
+  if (!_keyword.replace(/^\s+|\s+$/g, "")) {
+    alert("키워드를 입력해주세요!");
+    return;
+  }
+  // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+  //   ps.keywordSearch(keyword, placesSearchCB);
+};
 </script>
 <template>
   <div id="menu_wrap" class="bg_white">
     <div class="option">
-      <form onsubmit="searchPlaces(); return false;">
+      <form @submit.prevent="searchPlaces(keyword ?? '')">
         <div class="input-group">
           <input
+            v-model="keyword"
             type="text"
             class="form-control"
             placeholder="위치 검색"
-            id="keyword"
             size="15"
           />
           <button class="btn btn-outline-dark" type="submit">
