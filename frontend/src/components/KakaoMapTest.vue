@@ -2,9 +2,9 @@
 import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
 
-const doChangeSize = ref<null | ((size: number) => void)>();
-const doDisplayMarker = ref();
-const doDisplayInfoWindow = ref();
+const doChangeSize = ref<(size: number) => void>();
+const doDisplayMarker = ref<(markerPositions: number[][]) => void>();
+const doDisplayInfoWindow = ref<(content: string) => void>();
 
 const changeSize = function (size: number) {
   doChangeSize.value ? doChangeSize.value(size) : "";
