@@ -2,21 +2,9 @@
 import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
 
-const doChangeSize = ref<(size: number) => void>();
-const doDisplayMarker = ref<(markerPositions: number[][]) => void>();
-const doDisplayInfoWindow = ref<(content: string) => void>();
-
-const changeSize = function (size: number) {
-  doChangeSize.value ? doChangeSize.value(size) : "";
-};
-
-const displayMarker = function (markerPositions: number[][]) {
-  doDisplayMarker.value ? doDisplayMarker.value(markerPositions) : "";
-};
-
-const displayInfoWindow = function (content: string) {
-  doDisplayInfoWindow.value ? doDisplayInfoWindow.value(content) : "";
-};
+const changeSize = ref<(size: number) => void>();
+const displayMarker = ref<(markerPositions: number[][]) => void>();
+const displayInfoWindow = ref<(content: string) => void>();
 
 const marker1 = [
   [33.452278, 126.567803],
@@ -39,17 +27,17 @@ const content = '<div style="padding:5px;">Hello World!</div>';
 <template>
   <div>
     <KakaoMap
-      @change-size="(e) => (doChangeSize = e)"
-      @display-marker="(e) => (doDisplayMarker = e)"
-      @display-info-window="(e) => (doDisplayInfoWindow = e)"
+      @change-size="(e) => (changeSize = e)"
+      @display-marker="(e) => (displayMarker = e)"
+      @display-info-window="(e) => (displayInfoWindow = e)"
     />
     <div class="button-group">
-      <button @click="changeSize(0)">Hide</button>
-      <button @click="changeSize(400)">show</button>
-      <button @click="displayMarker(marker1)">marker set 1</button>
-      <button @click="displayMarker(marker2)">marker set 2</button>
-      <button @click="displayMarker([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow(content)">infowindow</button>
+      <button @click="changeSize!(0)">Hide</button>
+      <button @click="changeSize!(400)">show</button>
+      <button @click="displayMarker!(marker1)">marker set 1</button>
+      <button @click="displayMarker!(marker2)">marker set 2</button>
+      <button @click="displayMarker!([])">marker set 3 (empty)</button>
+      <button @click="displayInfoWindow!(content)">infowindow</button>
     </div>
   </div>
 </template>
