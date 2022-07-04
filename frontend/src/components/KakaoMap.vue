@@ -1,6 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref, defineEmits, defineProps } from "vue";
 
+interface LatLng {
+  latitude: number;
+  longitude: number;
+}
+
+interface Center extends LatLng {
+  level: number;
+}
+
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -16,7 +25,7 @@ onMounted(() => {
   }
 });
 const props = defineProps<{
-  center: { latitude: number; longitude: number; level: number };
+  center: Center;
 }>();
 
 const divMap = ref<HTMLDivElement | null>(null);
@@ -35,7 +44,11 @@ const emit = defineEmits<{
 
 const initMap = function () {
   if (!divMap.value) return;
-  const { latitude, longitude, level } = props.center;
+  const {
+    latitude = 37.566826,
+    longitude = 126.9786567,
+    level = 3,
+  } = props.center;
   const options = {
     center: new window.kakao.maps.LatLng(latitude, longitude),
     level: level,
@@ -51,7 +64,6 @@ const changeSize = function (size: number) {
   map.value?.relayout();
 };
 emit("changeSize", changeSize);
-
 const displayMarker = function (markerPositions: number[][]) {
   if (markers.value && markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null));
