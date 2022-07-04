@@ -11,8 +11,25 @@ const searchPlaces = function (_keyword: string) {
     return;
   }
   const ps = new window.kakao.maps.services.Places();
-  // ps.keywordSearch(keyword, placesSearchCB);
+  ps.keywordSearch(_keyword, placesSearchCB);
 };
+
+function placesSearchCB(data, status, pagination) {
+  const services = window.kakao.maps.services;
+  if (status === services.Status.ZERO_RESULT) return alert("No result");
+  if (status === services.Status.ERROR) return alert("Error");
+  if (status !== services.Status.OK) return alert("Error");
+  console.log(data);
+  console.log(pagination);
+  // displayPlaces(data);
+  // displayPagination(pagination);
+
+  // myCollapse.classList.add("show");
+  // placesListBtn.setAttribute("aria-expanded", "true");
+  // placesListBtn.classList.remove("collapsed");
+
+  // chkCollapsed();
+}
 </script>
 <template>
   <div id="menu_wrap" class="bg_white">

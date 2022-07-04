@@ -45,8 +45,6 @@ const displayMarker = function (markerPositions: number[][]) {
     (position) => new window.kakao.maps.LatLng(...position)
   );
 
-  console.log(positions);
-
   if (positions.length > 0) {
     markers.value = positions.map(
       (position) =>
