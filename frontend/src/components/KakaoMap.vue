@@ -1,8 +1,22 @@
 <script setup lang="ts">
 import { onMounted, ref, defineEmits } from "vue";
-import { Maps } from "@/components/kakaoTypes";
 
-const map = ref<Maps>();
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap();
+  } else {
+    const script = document.createElement("script");
+    /* global kakao */
+    script.onload = () => {
+      return window.kakao.maps.load(initMap);
+    };
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
+    document.head.appendChild(script);
+  }
+});
+
+const map = ref<kakao.maps.Map>();
 const markers = ref<number[]>();
 const infowindow = ref();
 
@@ -22,8 +36,7 @@ const initMap = function () {
     level: 5,
   };
 
-  //지도 객체를 등록합니다.
-  //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+  if (!container) return;
   map.value = new window.kakao.maps.Map(container, options);
 };
 
@@ -87,21 +100,6 @@ const displayInfoWindow = function (content: string) {
 };
 
 emit("displayInfoWindow", displayInfoWindow);
-
-onMounted(() => {
-  if (window.kakao && window.kakao.maps) {
-    initMap();
-  } else {
-    const script = document.createElement("script");
-    /* global kakao */
-    script.onload = () => {
-      return window.kakao.maps.load(initMap);
-    };
-    script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
-    document.head.appendChild(script);
-  }
-});
 </script>
 
 <template>
