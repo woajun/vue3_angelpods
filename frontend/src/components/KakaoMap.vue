@@ -16,6 +16,7 @@ onMounted(() => {
   }
 });
 
+const divMap = ref<HTMLDivElement | null>(null);
 const map = ref<kakao.maps.Map>();
 const markers = ref<number[]>();
 const infowindow = ref();
@@ -30,18 +31,18 @@ const emit = defineEmits<{
 }>();
 
 const initMap = function () {
-  const container = document.getElementById("map");
   const options = {
     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
     level: 5,
   };
 
-  if (!container) return;
-  map.value = new window.kakao.maps.Map(container, options);
+  console.log(divMap.value);
+  if (!divMap.value) return;
+  map.value = new window.kakao.maps.Map(divMap.value, options);
 };
 
 const changeSize = function (size: number) {
-  const container = document.getElementById("map");
+  const container = divMap.value;
   if (!container) return;
   container.style.width = `${size}px`;
   container.style.height = `${size}px`;
@@ -103,7 +104,7 @@ emit("displayInfoWindow", displayInfoWindow);
 </script>
 
 <template>
-  <div id="map" />
+  <div ref="divMap" />
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
