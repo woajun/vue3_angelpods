@@ -45,6 +45,8 @@ const displayMarker = function (markerPositions: number[][]) {
     (position) => new window.kakao.maps.LatLng(...position)
   );
 
+  console.log(positions);
+
   if (positions.length > 0) {
     markers.value = positions.map(
       (position) =>
@@ -98,7 +100,7 @@ onMounted(() => {
       return window.kakao.maps.load(initMap);
     };
     script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da";
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
     document.head.appendChild(script);
   }
 });

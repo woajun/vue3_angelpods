@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const keyword = ref<string>();
 
@@ -10,8 +10,8 @@ const searchPlaces = function (_keyword: string) {
     alert("키워드를 입력해주세요!");
     return;
   }
-  // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-  //   ps.keywordSearch(keyword, placesSearchCB);
+  const ps = new window.kakao.maps.services.Places();
+  // ps.keywordSearch(keyword, placesSearchCB);
 };
 </script>
 <template>
