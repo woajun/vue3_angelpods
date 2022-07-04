@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, defineEmits } from "vue";
+import { onMounted, ref, defineEmits, defineProps } from "vue";
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -15,6 +15,9 @@ onMounted(() => {
     document.head.appendChild(script);
   }
 });
+const props = defineProps<{
+  center: { latitude: number; longitude: number; level: number };
+}>();
 
 const divMap = ref<HTMLDivElement | null>(null);
 const map = ref<kakao.maps.Map>();
@@ -31,13 +34,12 @@ const emit = defineEmits<{
 }>();
 
 const initMap = function () {
-  const options = {
-    center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-    level: 5,
-  };
-
-  console.log(divMap.value);
   if (!divMap.value) return;
+  const { latitude, longitude, level } = props.center;
+  const options = {
+    center: new window.kakao.maps.LatLng(latitude, longitude),
+    level: level,
+  };
   map.value = new window.kakao.maps.Map(divMap.value, options);
 };
 

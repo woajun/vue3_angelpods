@@ -27,6 +27,7 @@ const content = '<div style="padding:5px;">Hello World!</div>';
 <template>
   <div>
     <KakaoMap
+      :center="{ latitude: 37.566826, longitude: 126.9786567, level: 3 }"
       @change-size="(e) => (changeSize = e)"
       @display-marker="(e) => (displayMarker = e)"
       @display-info-window="(e) => (displayInfoWindow = e)"
