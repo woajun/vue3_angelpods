@@ -10,7 +10,10 @@ import MapSearcher from "./MapSearcher.vue";
     <TopNav />
 
     <!--지도-->
-    <KakaoMap id="map" />
+    <KakaoMap
+      id="map"
+      :center="{ latitude: 37.566826, longitude: 126.9786567, level: 3 }"
+    />
     <MapSearcher />
     <template>
       <div id="menu_wrap" class="bg_white">
@@ -18,7 +21,6 @@ import MapSearcher from "./MapSearcher.vue";
           <form @submit.prevent="searchPlaces(keyword ?? '')">
             <div class="input-group">
               <input
-                v-model="keyword"
                 type="text"
                 class="form-control"
                 placeholder="위치 검색"
