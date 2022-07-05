@@ -1,0 +1,108 @@
+<script setup lang="ts">
+"A";
+</script>
+<template>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">위치선택</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div id="map"></div>
+
+          <div id="menu_wrap" class="bg_white">
+            <div class="option">
+              <form onsubmit="searchPlaces(); return false;">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    value="이태원 맛집"
+                    id="keyword"
+                    size="15"
+                  />
+                  <button
+                    class="btn btn-outline-dark"
+                    type="button"
+                    onclick="searchPlaces();"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-search"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </form>
+            </div>
+            <hr />
+
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+              <div
+                class="accordion-item"
+                style="background-color: rgba(255, 255, 255, 0)"
+              >
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button
+                    id="placesListBtn"
+                    class="accordion-button collapsed py-0"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    접기/펴기
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <ul id="placesList"></ul>
+                  <div id="pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="curBtn text-end">
+            <button
+              type="button"
+              class="btn btn-dark"
+              onclick="curPositionBtn()"
+            >
+              현위치
+              <AIcons type="location" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

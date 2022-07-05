@@ -1,64 +1,12 @@
 <script lang="ts" setup>
-"a";
+import TopNav from "@/components/TopNav.vue";
+import AIcons from "../components/AIcons.vue";
+import ChoiceLocationModal from "./ChoiceLocationModal.vue";
+("a");
 </script>
 <template>
   <!-- nav -->
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top px-3">
-    <a class="navbar-brand" href="../index.jsp">Angel Pods</a>
-    <div>
-      <button
-        class="navbar-toggler collapsed"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarsExample03"
-        aria-controls="navbarsExample03"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    </div>
-
-    <div class="navbar-collapse collapse" id="navbarsExample03">
-      <ul class="navbar-nav me-auto mb-2 mb-sm-0">
-        <li class="nav-item">
-          <a class="nav-link text-white" href="../find/list_view.jsp"
-            >습득물보기</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">분실물보기</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="f_write_view.do">습득신고</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="#">분실신고</a>
-        </li>
-      </ul>
-      <div id="nav-login" hidden="true">
-        <a
-          type="button"
-          class="btn btn-light me-2 text-secondary fw-bold"
-          href="../member/login.jsp?url=${pageContext.request.requestURL}"
-          >로그인</a
-        >
-        <a
-          type="button"
-          class="btn btn-outline-light text-white"
-          href="../member/join.jsp"
-          >회원가입</a
-        >
-      </div>
-      <div id="nav-logout" hidden="true" class="text-white">
-        <a href="#" class="text-white">${name}</a> 님
-        <a type="button" class="btn btn-outline-light" href="logout.do"
-          >로그아웃</a
-        >
-      </div>
-      <input id="validMem" value="${ValidMem}" hidden="true" />
-    </div>
-  </nav>
+  <TopNav />
   <div style="padding-top: 50px"></div>
 
   <!-- 습득 게시물 등록 -->
@@ -83,21 +31,8 @@
                       id="photoBtn"
                       class="border btn"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="22"
-                        height="22"
-                        fill="currentColor"
-                        class="bi bi-camera-fill mt-2"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M10.5 8.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"
-                        />
-                        <path
-                          d="M2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2zm.5 2a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm9 2.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0z"
-                        /></svg
-                      ><br />
+                      <AIcons type="camera" />
+                      <br />
                       <span id="imgCntSpan">0</span>/10
                       <input
                         type="file"
@@ -195,142 +130,13 @@
                     />
                   </div>
                   <div class="col-4 text-end">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
-                      fill="currentColor"
-                      class="bi bi-arrow-right-square-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"
-                      />
-                    </svg>
+                    <AIcons type="arrow-light-square" />
                   </div>
                 </div>
               </button>
             </div>
 
-            <!-- Modal -->
-            <div
-              class="modal fade"
-              id="staticBackdrop"
-              data-bs-backdrop="static"
-              data-bs-keyboard="false"
-              tabindex="-1"
-              aria-labelledby="staticBackdropLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">
-                      위치선택
-                    </h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <div id="map"></div>
-
-                    <div id="menu_wrap" class="bg_white">
-                      <div class="option">
-                        <form onsubmit="searchPlaces(); return false;">
-                          <div class="input-group">
-                            <input
-                              type="text"
-                              class="form-control"
-                              value="이태원 맛집"
-                              id="keyword"
-                              size="15"
-                            />
-                            <button
-                              class="btn btn-outline-dark"
-                              type="button"
-                              onclick="searchPlaces();"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                class="bi bi-search"
-                                viewBox="0 0 16 16"
-                              >
-                                <path
-                                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                                />
-                              </svg>
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                      <hr />
-
-                      <div
-                        class="accordion accordion-flush"
-                        id="accordionFlushExample"
-                      >
-                        <div
-                          class="accordion-item"
-                          style="background-color: rgba(255, 255, 255, 0)"
-                        >
-                          <h2 class="accordion-header" id="flush-headingOne">
-                            <button
-                              id="placesListBtn"
-                              class="accordion-button collapsed py-0"
-                              type="button"
-                              data-bs-toggle="collapse"
-                              data-bs-target="#flush-collapseOne"
-                              aria-expanded="false"
-                              aria-controls="flush-collapseOne"
-                            >
-                              접기/펴기
-                            </button>
-                          </h2>
-                          <div
-                            id="flush-collapseOne"
-                            class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne"
-                            data-bs-parent="#accordionFlushExample"
-                          >
-                            <ul id="placesList"></ul>
-                            <div id="pagination"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="curBtn text-end">
-                      <button
-                        type="button"
-                        class="btn btn-dark"
-                        onclick="curPositionBtn()"
-                      >
-                        현위치
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-geo-alt-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ChoiceLocationModal />
 
             <div class="col-12 mt-1">
               <input
