@@ -10,34 +10,16 @@ interface Center extends LatLng {
   level: number;
 }
 
-onMounted(() => {
-  if (window.kakao && window.kakao.maps) {
-    initMap();
-  } else {
-    const script = document.createElement("script");
-    /* global kakao */
-    script.onload = () => {
-      return window.kakao.maps.load(initMap);
-    };
-    script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
-    document.head.appendChild(script);
-  }
-});
-const props = defineProps<{
-  center: Center;
-}>();
-
 const divMap = ref<HTMLDivElement | null>(null);
 const map = ref<kakao.maps.Map>();
-const markers = ref<number[]>();
+const markers = ref<kakao.maps.Marker[]>();
 const infowindow = ref();
 
 const emit = defineEmits<{
   (e: "changeSize", changeSize: (size: number) => void): void;
   (
     e: "displayMarker",
-    displayMarker: (markerPositions: number[][]) => void
+    displayMarker: (markerPositions: LatLng[]) => void
   ): void;
   (e: "displayInfoWindow", displayInfoWindow: (content: string) => void): void;
 }>();
@@ -63,35 +45,29 @@ const changeSize = function (size: number) {
   container.style.height = `${size}px`;
   map.value?.relayout();
 };
-emit("changeSize", changeSize);
-const displayMarker = function (markerPositions: number[][]) {
+
+const displayMarker = function (rawLatLngs: LatLng[]) {
   if (markers.value && markers.value.length > 0) {
     markers.value.forEach((marker) => marker.setMap(null));
   }
 
-  const positions = markerPositions.map(
-    (position) => new window.kakao.maps.LatLng(...position)
+  const latLngs = rawLatLngs.map(
+    (e) => new window.kakao.maps.LatLng(e.latitude, e.longitude)
   );
 
-  if (positions.length > 0) {
-    markers.value = positions.map(
-      (position) =>
-        new window.kakao.maps.Marker({
-          map: map.value,
-          position,
-        })
-    );
+  if (!latLngs.length) return;
+  markers.value = latLngs.map((position) => {
+    const markerOption = {
+      map: map.value,
+      position,
+    };
+    return new window.kakao.maps.Marker(markerOption);
+  });
 
-    const bounds = positions.reduce(
-      (bounds, latlng) => bounds.extend(latlng),
-      new window.kakao.maps.LatLngBounds()
-    );
-
-    map.value?.setBounds(bounds);
-  }
+  const bounds = new window.kakao.maps.LatLngBounds();
+  latLngs.forEach((e) => bounds.extend(e));
+  map.value?.setBounds(bounds);
 };
-
-emit("displayMarker", displayMarker);
 
 const displayInfoWindow = function (content: string) {
   if (infowindow.value && infowindow.value.getMap()) {
@@ -114,7 +90,25 @@ const displayInfoWindow = function (content: string) {
   map.value?.setCenter(iwPosition);
 };
 
+emit("changeSize", changeSize);
+emit("displayMarker", displayMarker);
 emit("displayInfoWindow", displayInfoWindow);
+
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap();
+  } else {
+    /* global kakao */
+    const script = document.createElement("script");
+    script.onload = () => window.kakao.maps.load(initMap);
+    script.src =
+      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
+    document.head.appendChild(script);
+  }
+});
+const props = defineProps<{
+  center: Center;
+}>();
 </script>
 
 <template>
