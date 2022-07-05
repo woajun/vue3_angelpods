@@ -16,6 +16,7 @@ interface Info extends LatLng {
 
 const props = defineProps<{
   center?: Center;
+  mapClickEvent?: (latlng: LatLng) => void;
 }>();
 
 const divMap = ref<HTMLDivElement | null>(null);
@@ -44,9 +45,21 @@ const initMap = function () {
     level: level,
   };
   map.value = new window.kakao.maps.Map(divMap.value, options);
-  console.log(map.value);
+
+  // 지도 클릭 이벤트
+  kakao.maps.event.addListener(map.value, "click", mapClickEvent);
   emit("emitMap", map.value);
 };
+
+function mapClickEvent(mouseEvent: kakao.maps.event.MouseEvent) {
+  const latlng = mouseEvent.latLng;
+  console.log(latlng);
+  if (!props.mapClickEvent) return;
+  props.mapClickEvent({
+    latitude: latlng.getLat(),
+    longitude: latlng.getLng(),
+  });
+}
 
 const changeSize = function (size: number) {
   const container = divMap.value;
