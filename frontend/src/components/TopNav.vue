@@ -1,6 +1,4 @@
-<script setup lang="ts">
-console.log("b");
-</script>
+<script setup lang="ts"></script>
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top px-3">
     <a class="navbar-brand">Angel Pods</a>

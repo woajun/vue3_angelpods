@@ -2,7 +2,9 @@
 import TopNav from "@/components/TopNav.vue";
 import AIcons from "../components/AIcons.vue";
 import ChoiceLocationModal from "./ChoiceLocationModal.vue";
-("a");
+import { ref } from "vue";
+
+const openModal = ref<() => void>();
 </script>
 <template>
   <!-- nav -->
@@ -92,42 +94,11 @@ import ChoiceLocationModal from "./ChoiceLocationModal.vue";
                 class="form-control form-control-hover"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
-                onclick="openMap();"
+                @click="openModal!()"
               >
                 <div class="row justify-content-between">
                   <div class="col-8 text-start">
                     <span id="sidoGueDong"> 습득 장소를 선택하세요. </span>
-
-                    <input
-                      type="hidden"
-                      id="lat"
-                      name="lat"
-                      value="${dto.lat}"
-                    />
-                    <input
-                      type="hidden"
-                      id="lng"
-                      name="lng"
-                      value="${dto.lng}"
-                    />
-                    <input
-                      type="hidden"
-                      id="sido"
-                      name="sido"
-                      value="${dto.sido}"
-                    />
-                    <input
-                      type="hidden"
-                      id="gue"
-                      name="gue"
-                      value="${dto.gue}"
-                    />
-                    <input
-                      type="hidden"
-                      id="dong"
-                      name="dong"
-                      value="${dto.dong}"
-                    />
                   </div>
                   <div class="col-4 text-end">
                     <AIcons type="arrow-light-square" />
@@ -136,7 +107,7 @@ import ChoiceLocationModal from "./ChoiceLocationModal.vue";
               </button>
             </div>
 
-            <ChoiceLocationModal />
+            <ChoiceLocationModal @openModal="(e) => (openModal = e)" />
 
             <div class="col-12 mt-1">
               <input

@@ -14,6 +14,10 @@ interface Info extends LatLng {
   content: string;
 }
 
+const props = defineProps<{
+  center?: Center;
+}>();
+
 const divMap = ref<HTMLDivElement | null>(null);
 const map = ref<kakao.maps.Map>();
 const markers = ref<kakao.maps.Marker[]>();
@@ -26,20 +30,22 @@ const emit = defineEmits<{
     displayMarker: (markerPositions: LatLng[]) => void
   ): void;
   (e: "displayInfoWindow", displayInfoWindow: (content: Info) => void): void;
+  (e: "emitMap", map: kakao.maps.Map): void;
 }>();
 
 const initMap = function () {
   if (!divMap.value) return;
-  const {
-    latitude = 37.566826,
-    longitude = 126.9786567,
-    level = 3,
-  } = props.center;
+  const aCenter = props.center;
+  const latitude = aCenter?.latitude ?? 37.566826;
+  const longitude = aCenter?.longitude ?? 126.9786567;
+  const level = aCenter?.level ?? 3;
   const options = {
     center: new window.kakao.maps.LatLng(latitude, longitude),
     level: level,
   };
   map.value = new window.kakao.maps.Map(divMap.value, options);
+  console.log(map.value);
+  emit("emitMap", map.value);
 };
 
 const changeSize = function (size: number) {
@@ -101,9 +107,6 @@ onMounted(() => {
     document.head.appendChild(script);
   }
 });
-const props = defineProps<{
-  center: Center;
-}>();
 </script>
 
 <template>
