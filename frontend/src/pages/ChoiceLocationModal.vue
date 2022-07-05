@@ -13,6 +13,12 @@ const openModal = function () {
     map.value?.relayout();
   }, 500);
 };
+
+const paintMarker = function (lat: number, lng: number) {
+  console.log(lat);
+  console.log(lng);
+};
+
 emit("openModal", openModal);
 </script>
 <template>
@@ -38,7 +44,11 @@ emit("openModal", openModal);
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap id="map" @emitMap="(aMap) => (map = aMap)" />
+          <KakaoMap
+            id="map"
+            @emitMap="(aMap) => (map = aMap)"
+            :mapClickEvent="paintMarker"
+          />
 
           <div id="menu_wrap" class="bg_white">
             <div class="option">
