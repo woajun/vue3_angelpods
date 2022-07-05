@@ -3,8 +3,8 @@ import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
 
 const changeSize = ref<(size: number) => void>();
-const displayMarker = ref<(markerPositions: number[][]) => void>();
-const displayInfoWindow = ref<(content: string) => void>();
+const displayMarker = ref<(markerPositions: any[]) => void>();
+const displayInfoWindow = ref<(info: any) => void>();
 
 const marker1 = [
   { latitude: 33.452278, longitude: 126.567803 },
@@ -22,7 +22,11 @@ const marker2 = [
   { latitude: 37.49646391248451, longitude: 127.02675574250912 },
 ];
 
-const content = '<div style="padding:5px;">Hello World!</div>';
+const info = {
+  content: '<div style="padding:5px;">Hello World!</div>',
+  latitude: 33.450701,
+  longitude: 126.570667,
+};
 </script>
 <template>
   <div>
@@ -38,7 +42,7 @@ const content = '<div style="padding:5px;">Hello World!</div>';
       <button @click="displayMarker!(marker1)">marker set 1</button>
       <button @click="displayMarker!(marker2)">marker set 2</button>
       <button @click="displayMarker!([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow!(content)">infowindow</button>
+      <button @click="displayInfoWindow!(info)">infowindow</button>
     </div>
   </div>
 </template>

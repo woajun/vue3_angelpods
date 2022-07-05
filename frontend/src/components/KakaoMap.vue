@@ -10,10 +10,14 @@ interface Center extends LatLng {
   level: number;
 }
 
+interface Info extends LatLng {
+  content: string;
+}
+
 const divMap = ref<HTMLDivElement | null>(null);
 const map = ref<kakao.maps.Map>();
 const markers = ref<kakao.maps.Marker[]>();
-const infowindow = ref();
+const infowindow = ref<kakao.maps.InfoWindow>();
 
 const emit = defineEmits<{
   (e: "changeSize", changeSize: (size: number) => void): void;
@@ -21,7 +25,7 @@ const emit = defineEmits<{
     e: "displayMarker",
     displayMarker: (markerPositions: LatLng[]) => void
   ): void;
-  (e: "displayInfoWindow", displayInfoWindow: (content: string) => void): void;
+  (e: "displayInfoWindow", displayInfoWindow: (content: Info) => void): void;
 }>();
 
 const initMap = function () {
@@ -68,25 +72,17 @@ const displayMarker = function (rawLatLngs: LatLng[]) {
   map.value?.setBounds(bounds);
 };
 
-const displayInfoWindow = function (content: string) {
-  if (infowindow.value && infowindow.value.getMap()) {
-    //이미 생성한 인포윈도우가 있기 때문에 지도 중심좌표를 인포윈도우 좌표로 이동시킨다.
-    map.value?.setCenter(infowindow.value.getPosition());
-    return;
-  }
-
-  var iwContent = content, // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    iwPosition = new window.kakao.maps.LatLng(33.450701, 126.570667), //인포윈도우 표시 위치입니다
-    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-
+const displayInfoWindow = function (info: Info) {
+  if (infowindow.value) infowindow.value.close();
+  const latlng = new window.kakao.maps.LatLng(info.latitude, info.longitude);
   infowindow.value = new window.kakao.maps.InfoWindow({
-    map: map.value, // 인포윈도우가 표시될 지도
-    position: iwPosition,
-    content: iwContent,
-    removable: iwRemoveable,
+    map: map.value,
+    position: latlng,
+    content: info.content,
+    removable: true,
   });
-
-  map.value?.setCenter(iwPosition);
+  map.value?.setCenter(latlng);
+  map.value?.setLevel(3);
 };
 
 emit("changeSize", changeSize);
@@ -113,14 +109,3 @@ const props = defineProps<{
 <template>
   <div ref="divMap" />
 </template>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.button-group {
-  margin: 10px 0px;
-}
-
-button {
-  margin: 0 3px;
-}
-</style>
