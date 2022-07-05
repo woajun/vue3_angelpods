@@ -56,13 +56,12 @@ const displayMarker = function (rawLatLngs: LatLng[]) {
   );
 
   if (!latLngs.length) return;
-  markers.value = latLngs.map((position) => {
-    const markerOption = {
-      map: map.value,
-      position,
-    };
-    return new window.kakao.maps.Marker(markerOption);
-  });
+
+  const markerOptions = latLngs.map((position) => ({
+    map: map.value,
+    position,
+  }));
+  markers.value = markerOptions.map((o) => new window.kakao.maps.Marker(o));
 
   const bounds = new window.kakao.maps.LatLngBounds();
   latLngs.forEach((e) => bounds.extend(e));
