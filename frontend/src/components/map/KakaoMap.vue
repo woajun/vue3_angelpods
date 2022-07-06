@@ -3,7 +3,7 @@ import { onMounted, ref, defineProps, reactive } from "vue";
 import KakaoMap from "./kakaoMap";
 defineProps<{
   center: { latitude: number; longitude: number };
-  useMarker: boolean;
+  markerType: boolean;
 }>();
 
 const container = ref<HTMLDivElement | null>(null);
@@ -12,7 +12,7 @@ const map = reactive(new KakaoMap());
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent("single-marker");
+  map.setClickEvent("multi-markers");
 };
 
 onMounted(() => {

@@ -1,7 +1,11 @@
 export default class KakaoMap {
   map: kakao.maps.Map | undefined;
+  latlngs: kakao.maps.LatLng[];
+  markers: kakao.maps.Marker[];
   constructor() {
     this.map = undefined;
+    this.latlngs = [];
+    this.markers = [];
   }
   set container(container: HTMLDivElement) {
     this.map = new window.kakao.maps.Map(container, {
@@ -16,21 +20,35 @@ export default class KakaoMap {
 
   setClickEvent(type: string) {
     if (!this.map) return;
-
+    const markers = this.markers;
+    const latlngs = this.latlngs;
+    const map = this.map;
     switch (type) {
       case "single-marker": {
         const marker = new kakao.maps.Marker({
-          position: this.map.getCenter(),
+          position: map.getCenter(),
         });
-        marker.setMap(this.map);
+        marker.setMap(map);
         kakao.maps.event.addListener(
-          this.map,
+          map,
           "click",
           function (e: kakao.maps.event.MouseEvent) {
             const latlng = e.latLng;
             marker.setPosition(latlng);
-            console.log(apple);
-            apple += "b";
+          }
+        );
+        break;
+      }
+      case "multi-markers": {
+        kakao.maps.event.addListener(
+          map,
+          "click",
+          function (e: kakao.maps.event.MouseEvent) {
+            const marker = new kakao.maps.Marker({
+              position: e.latLng,
+            });
+            marker.setMap(map);
+            markers.push(marker);
           }
         );
         break;
@@ -41,4 +59,3 @@ export default class KakaoMap {
     }
   }
 }
-let apple = "aa";
