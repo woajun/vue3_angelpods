@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, defineProps, reactive } from "vue";
 import KakaoMap from "./kakaoMap";
-defineProps<{
+const props = defineProps<{
   center: { latitude: number; longitude: number };
-  markerType: boolean;
+  markerType: string;
+  content: string;
 }>();
 
 const container = ref<HTMLDivElement | null>(null);
@@ -12,7 +13,7 @@ const map = reactive(new KakaoMap());
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent("multi-markers");
+  map.setClickEvent("custom-overlay", props.content);
 };
 
 onMounted(() => {

@@ -18,10 +18,9 @@ export default class KakaoMap {
     this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 
-  setClickEvent(type: string) {
+  setClickEvent(type: string, content?: string) {
     if (!this.map) return;
     const markers = this.markers;
-    const latlngs = this.latlngs;
     const map = this.map;
     switch (type) {
       case "single-marker": {
@@ -51,6 +50,22 @@ export default class KakaoMap {
             markers.push(marker);
           }
         );
+        break;
+      }
+      case "custom-overlay": {
+        if (!content) return;
+        const marker = new kakao.maps.Marker({
+          position: map.getCenter(),
+        });
+        marker.setMap(map);
+        kakao.maps.event.addListener(marker, "click", function () {
+          const overlay = new kakao.maps.CustomOverlay({
+            content: content,
+            map: map,
+            position: marker.getPosition(),
+          });
+          overlay.setMap(map);
+        });
         break;
       }
       default: {
