@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, defineProps, reactive } from "vue";
 import KakaoMap from "./kakaoMap";
-const props = defineProps<{
+defineProps<{
   center: { latitude: number; longitude: number };
   useMarker: boolean;
 }>();
@@ -12,11 +12,8 @@ const map = reactive(new KakaoMap());
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
+  map.setClickEvent();
 };
-
-function mapClick() {
-  map.clickEvent();
-}
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -33,7 +30,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="map" ref="container" @click="mapClick" />
+  <div id="map" ref="container" />
 </template>
 <style>
 #map {
