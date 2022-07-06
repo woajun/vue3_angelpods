@@ -14,19 +14,28 @@ export default class KakaoMap {
     this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 
-  setClickEvent() {
+  setClickEvent(type: string) {
     if (!this.map) return;
-    const marker = new kakao.maps.Marker({
-      position: this.map.getCenter(),
-    });
-    marker.setMap(this.map);
-    kakao.maps.event.addListener(
-      this.map,
-      "click",
-      function (e: kakao.maps.event.MouseEvent) {
-        const latlng = e.latLng;
-        marker.setPosition(latlng);
+
+    switch (type) {
+      case "single-marker": {
+        const marker = new kakao.maps.Marker({
+          position: this.map.getCenter(),
+        });
+        marker.setMap(this.map);
+        kakao.maps.event.addListener(
+          this.map,
+          "click",
+          function (e: kakao.maps.event.MouseEvent) {
+            const latlng = e.latLng;
+            marker.setPosition(latlng);
+          }
+        );
+        break;
       }
-    );
+      default: {
+        console.log("nothing event");
+      }
+    }
   }
 }

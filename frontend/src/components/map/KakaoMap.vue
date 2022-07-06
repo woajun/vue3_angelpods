@@ -12,7 +12,7 @@ const map = reactive(new KakaoMap());
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent();
+  map.setClickEvent("single-marker");
 };
 
 onMounted(() => {
