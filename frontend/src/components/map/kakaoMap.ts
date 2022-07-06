@@ -2,10 +2,12 @@ export default class KakaoMap {
   map: kakao.maps.Map | undefined;
   latlngs: kakao.maps.LatLng[];
   markers: kakao.maps.Marker[];
+  overlays: kakao.maps.CustomOverlay[];
   constructor() {
     this.map = undefined;
     this.latlngs = [];
     this.markers = [];
+    this.overlays = [];
   }
   set container(container: HTMLDivElement) {
     this.map = new window.kakao.maps.Map(container, {
@@ -22,6 +24,7 @@ export default class KakaoMap {
     if (!this.map) return;
     const markers = this.markers;
     const map = this.map;
+    const overlays = this.overlays;
     switch (type) {
       case "single-marker": {
         const marker = new kakao.maps.Marker({
@@ -65,6 +68,7 @@ export default class KakaoMap {
             position: marker.getPosition(),
           });
           overlay.setMap(map);
+          overlays.push(overlay);
         });
         break;
       }
