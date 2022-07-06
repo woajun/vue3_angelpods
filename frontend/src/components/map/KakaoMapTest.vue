@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import KakaoMap from "./KakaoMap.vue";
 
+const center = ref();
 const changeSize = ref<(size: number) => void>();
 const displayMarker = ref<(markerPositions: any[]) => void>();
 const displayInfoWindow = ref<(info: any) => void>();
@@ -27,9 +28,17 @@ const info = {
   latitude: 33.450701,
   longitude: 126.570667,
 };
+
+function changeCenter(lat: number, lng: number) {
+  center.value = { latitude: lat, longitude: lng };
+}
 </script>
 <template>
   <div>
-    <KakaoMap :latitude="37.566826" :longitude="126.9786567" :level="3" />
+    <KakaoMap :center="center" :level="3" />
+    <button @click="changeCenter(33.452278, 126.567803)">1번</button>
+    <button @click="changeCenter(37.498553760499505, 127.02882598822454)">
+      2번
+    </button>
   </div>
 </template>

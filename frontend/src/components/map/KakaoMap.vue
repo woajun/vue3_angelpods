@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref, defineProps, reactive } from "vue";
+import { onMounted, ref, defineProps, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
-  latitude: number;
-  longitude: number;
   level: number;
+  center: { latitude: number; longitude: number };
 }>();
 
 const container = ref<HTMLDivElement | null>(null);
 const map = reactive(new KakaoMap());
+
+watch(
+  () => props.center,
+  (latlng) => {
+    map.setCenter(latlng.latitude, latlng.longitude);
+  }
+);
 
 const initMap = function () {
   if (!container.value) return;

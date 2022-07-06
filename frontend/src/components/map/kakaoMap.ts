@@ -9,7 +9,7 @@ export default class KakaoMap {
       level: 3,
     });
   }
-  set center(latlng: number[]) {
-    this.map?.setCenter(new kakao.maps.LatLng(latlng[0], latlng[1]));
+  setCenter(lat: number, lng: number) {
+    this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 }
