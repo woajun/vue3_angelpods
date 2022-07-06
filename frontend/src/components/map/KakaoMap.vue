@@ -1,22 +1,34 @@
 <script setup lang="ts">
-import { onMounted, ref, defineProps } from "vue";
+import { onMounted, ref, defineProps, reactive } from "vue";
+
+class KakaoMap {
+  map: kakao.maps.Map | undefined;
+  constructor() {
+    this.map = undefined;
+  }
+  set container(container: HTMLDivElement) {
+    this.map = new window.kakao.maps.Map(container, {
+      center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3,
+    });
+  }
+  set center(latlng: number[]) {
+    this.map?.setCenter(new kakao.maps.LatLng(latlng[0], latlng[1]));
+  }
+}
 
 const props = defineProps<{
   latitude: number;
   longitude: number;
-  level?: number;
+  level: number;
 }>();
 
 const container = ref<HTMLDivElement | null>(null);
-const map = ref<kakao.maps.Map>();
+const map = reactive(new KakaoMap());
 
 const initMap = function () {
   if (!container.value) return;
-  const options = {
-    center: new window.kakao.maps.LatLng(props.latitude, props.longitude),
-    level: props.level,
-  };
-  map.value = new window.kakao.maps.Map(container.value, options);
+  map.container = container.value;
 };
 
 onMounted(() => {
