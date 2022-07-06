@@ -30,19 +30,6 @@ const info = {
 </script>
 <template>
   <div>
-    <KakaoMap
-      :center="{ latitude: 37.566826, longitude: 126.9786567, level: 3 }"
-      @change-size="(e) => (changeSize = e)"
-      @display-marker="(e) => (displayMarker = e)"
-      @display-info-window="(e) => (displayInfoWindow = e)"
-    />
-    <div class="button-group">
-      <button @click="changeSize!(0)">Hide</button>
-      <button @click="changeSize!(400)">show</button>
-      <button @click="displayMarker!(marker1)">marker set 1</button>
-      <button @click="displayMarker!(marker2)">marker set 2</button>
-      <button @click="displayMarker!([])">marker set 3 (empty)</button>
-      <button @click="displayInfoWindow!(info)">infowindow</button>
-    </div>
+    <KakaoMap :latitude="37.566826" :longitude="126.9786567" :level="3" />
   </div>
 </template>
