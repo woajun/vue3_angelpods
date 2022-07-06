@@ -15,8 +15,27 @@ const openModal = function () {
 };
 
 const paintMarker = function (lat: number, lng: number) {
-  console.log(lat);
-  console.log(lng);
+  const geocoder = new kakao.maps.services.Geocoder();
+  geocoder.coord2Address(lat, lng, (result, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      let detailAddr = result[0].road_address
+        ? "<span>" + result[0].road_address.address_name + "</span></br>"
+        : "";
+      detailAddr +=
+        '<span class="jibun gray"> ' +
+        result[0].address.address_name +
+        "</span>";
+      let content =
+        '<div class="bAddr" style="font-size:15px;">' +
+        '<span class="">습득한 곳이 이곳인가요?</span></br>' +
+        '<div class="info pb-0">' +
+        detailAddr +
+        '</br></div><div class="text-center">' +
+        '<button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="markerClick()">입력</button>' +
+        "</div>" +
+        "</div>";
+    }
+  });
 };
 
 emit("openModal", openModal);
