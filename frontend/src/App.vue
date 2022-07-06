@@ -1,19 +1,15 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import FindList from "@/components/FindList.vue";
-import ChoiceLocation from "./pages/ChoiceLocation.vue";
-// import KakaoMapTest from "./components/KakaoMapTest.vue";
+import KakaoMapTest from "./components/map/KakaoMapTest.vue";
 export default defineComponent({
   name: "App",
   components: {
-    ChoiceLocation,
+    KakaoMapTest,
   },
 });
 </script>
 <template>
-  <ChoiceLocation />
-  <!-- <FindList /> -->
-  <!-- <KakaoMapTest /> -->
+  <KakaoMapTest />
 </template>
 
 <style>

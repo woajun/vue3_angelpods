@@ -34,7 +34,6 @@ const paintMarker = function (latlng: kakao.maps.LatLng) {
         '<button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="markerClick()">입력</button>' +
         "</div>" +
         "</div>";
-      console.log(content);
       const markerOption: kakao.maps.MarkerOptions = {
         map: map.value,
         position: latlng,
