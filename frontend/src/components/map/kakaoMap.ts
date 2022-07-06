@@ -29,6 +29,8 @@ export default class KakaoMap {
           function (e: kakao.maps.event.MouseEvent) {
             const latlng = e.latLng;
             marker.setPosition(latlng);
+            console.log(apple);
+            apple += "b";
           }
         );
         break;
@@ -39,3 +41,4 @@ export default class KakaoMap {
     }
   }
 }
+let apple = "aa";
