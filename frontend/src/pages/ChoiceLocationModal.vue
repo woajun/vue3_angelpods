@@ -14,9 +14,9 @@ const openModal = function () {
   }, 500);
 };
 
-const paintMarker = function (lat: number, lng: number) {
+const paintMarker = function (latlng: kakao.maps.LatLng) {
   const geocoder = new kakao.maps.services.Geocoder();
-  geocoder.coord2Address(lat, lng, (result, status) => {
+  geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
     if (status === kakao.maps.services.Status.OK) {
       let detailAddr = result[0].road_address
         ? "<span>" + result[0].road_address.address_name + "</span></br>"
@@ -34,6 +34,12 @@ const paintMarker = function (lat: number, lng: number) {
         '<button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="markerClick()">입력</button>' +
         "</div>" +
         "</div>";
+      console.log(content);
+      const markerOption: kakao.maps.MarkerOptions = {
+        map: map.value,
+        position: latlng,
+      };
+      new kakao.maps.Marker(markerOption);
     }
   });
 };
@@ -67,6 +73,8 @@ emit("openModal", openModal);
             id="map"
             @emitMap="(aMap) => (map = aMap)"
             :mapClickEvent="paintMarker"
+            :markerSetting="markerSetting"
+            :markers="markers"
           />
 
           <div id="menu_wrap" class="bg_white">

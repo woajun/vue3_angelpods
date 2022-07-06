@@ -16,7 +16,7 @@ interface Info extends LatLng {
 
 const props = defineProps<{
   center?: Center;
-  mapClickEvent?: (lat: number, lng: number) => void;
+  mapClickEvent?: (latlng: kakao.maps.LatLng) => void;
 }>();
 
 const divMap = ref<HTMLDivElement | null>(null);
@@ -54,7 +54,7 @@ const initMap = function () {
 function mapClickEvent(mouseEvent: kakao.maps.event.MouseEvent) {
   const latlng = mouseEvent.latLng;
   if (!props.mapClickEvent) return;
-  props.mapClickEvent(latlng.getLat(), latlng.getLng());
+  props.mapClickEvent(latlng);
 }
 
 const changeSize = function (size: number) {
