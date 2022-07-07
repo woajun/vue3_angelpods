@@ -34,32 +34,11 @@ export default class KakaoMap {
     const overlays = this.overlays;
     switch (type) {
       case "single-marker": {
-        const marker = new kakao.maps.Marker({
-          position: map.getCenter(),
-        });
-        marker.setMap(map);
-        kakao.maps.event.addListener(
-          map,
-          "click",
-          function (e: kakao.maps.event.MouseEvent) {
-            const latlng = e.latLng;
-            marker.setPosition(latlng);
-          }
-        );
+        singleMarkerEvent(map);
         break;
       }
       case "multi-markers": {
-        kakao.maps.event.addListener(
-          map,
-          "click",
-          function (e: kakao.maps.event.MouseEvent) {
-            const marker = new kakao.maps.Marker({
-              position: e.latLng,
-            });
-            marker.setMap(map);
-            markers.push(marker);
-          }
-        );
+        multiMarkerEvent(map, markers);
         break;
       }
       case "custom-overlay": {
@@ -118,4 +97,32 @@ export default class KakaoMap {
       }
     }
   }
+}
+function singleMarkerEvent(map: kakao.maps.Map) {
+  const marker = new kakao.maps.Marker({
+    position: map.getCenter(),
+  });
+  marker.setMap(map);
+  kakao.maps.event.addListener(
+    map,
+    "click",
+    function (e: kakao.maps.event.MouseEvent) {
+      const latlng = e.latLng;
+      marker.setPosition(latlng);
+    }
+  );
+}
+
+function multiMarkerEvent(map: kakao.maps.Map, markers: kakao.maps.Marker[]) {
+  kakao.maps.event.addListener(
+    map,
+    "click",
+    function (e: kakao.maps.event.MouseEvent) {
+      const marker = new kakao.maps.Marker({
+        position: e.latLng,
+      });
+      marker.setMap(map);
+      markers.push(marker);
+    }
+  );
 }

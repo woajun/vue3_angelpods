@@ -21,7 +21,7 @@ function changeCenter(lat: number, lng: number) {
 </script>
 <template>
   <div>
-    <KakaoMap :center="center" marker-type="custom-overlay" :content="'안녕'" />
+    <KakaoMap :center="center" marker-type="multi-markers" :content="'안녕'" />
     <button @click="logContent">1번</button>
     <button @click="changeCenter(33.452278, 126.567803)">1번</button>
     <button @click="changeCenter(37.498553760499505, 127.02882598822454)">
