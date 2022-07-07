@@ -21,7 +21,7 @@ watch(
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent("overlay", props.content);
+  map.setClickEvent(props.markerType, props.content);
 };
 
 onMounted(() => {
