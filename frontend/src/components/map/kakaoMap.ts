@@ -1,3 +1,10 @@
+interface OverlayOption {
+  title?: string;
+  imgUrl?: string;
+  message?: string;
+  address?: string;
+  url?: string;
+}
 export default class KakaoMap {
   map: kakao.maps.Map | undefined;
   latlngs: kakao.maps.LatLng[];
@@ -20,7 +27,7 @@ export default class KakaoMap {
     this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 
-  setClickEvent(type: string, message?: string) {
+  setClickEvent(type: string, overlayOption: OverlayOption) {
     if (!this.map) return;
     const markers = this.markers;
     const map = this.map;
@@ -60,7 +67,7 @@ export default class KakaoMap {
 <div class="wrap">
       <div class="info">
           <div class="title">
-              카카오 스페이스닷원
+              ${overlayOption.title}
               <div class="close" title="닫기"></div>
           </div>
           <div class="body">
@@ -68,9 +75,9 @@ export default class KakaoMap {
                   <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
              </div>
               <div class="desc">
-                  <div class="ellipsis">${message}</div>
-                  <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>
-                  <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>
+                  <div class="ellipsis">${overlayOption.message}</div>
+                  <div class="jibun ellipsis">${overlayOption.address}</div>
+                  <div><a href="${overlayOption.url}" target="_blank" class="link">홈페이지</a></div>
               </div>
           </div>
       </div>
