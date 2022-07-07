@@ -93,7 +93,9 @@ export default class KakaoMap {
         const nWrap = bodyNode.childNodes[0];
         const closeBtn = nWrap.childNodes[1].childNodes[1].childNodes[1];
         closeBtn.addEventListener("click", () => {
+          console.log(this.overlays);
           this.overlays[0].setMap(null);
+          this.overlays.pop();
         });
         newDiv.appendChild(nWrap);
 
