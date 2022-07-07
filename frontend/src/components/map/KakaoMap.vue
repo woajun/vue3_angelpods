@@ -24,18 +24,8 @@ const initMap = function () {
   map.setClickEvent(props.markerType, props.content);
 };
 
-onMounted(() => {
-  if (window.kakao && window.kakao.maps) {
-    initMap();
-  } else {
-    /* global kakao */
-    const script = document.createElement("script");
-    script.onload = () => window.kakao.maps.load(initMap);
-    script.src =
-      "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=6980627efdafc9b33ee3f2e602c8f9da&libraries=services";
-    document.head.appendChild(script);
-  }
-});
+window.kakao.maps.load(initMap);
+initMap();
 </script>
 
 <template>
