@@ -29,20 +29,17 @@ export default class KakaoMap {
 
   setClickEvent(type: string, overlayOption: OverlayOption) {
     if (!this.map) return;
-    const markers = this.markers;
-    const map = this.map;
-    const overlays = this.overlays;
     switch (type) {
       case "single-marker": {
-        singleMarkerEvent(map);
+        singleMarkerEvent(this.map);
         break;
       }
       case "multi-markers": {
-        multiMarkerEvent(map, markers);
+        multiMarkerEvent(this.map, this.markers);
         break;
       }
       case "custom-overlay": {
-        customOverlay(map, overlays, overlayOption);
+        customOverlay(this.map, this.overlays, overlayOption);
         break;
       }
       default: {
