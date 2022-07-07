@@ -2,9 +2,9 @@
 import { onMounted, ref, defineProps, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
-  center: { latitude: number; longitude: number };
+  center?: { latitude: number; longitude: number };
   markerType: string;
-  content: string;
+  content?: string;
 }>();
 
 const container = ref<HTMLDivElement | null>(null);
@@ -13,6 +13,7 @@ const map = reactive(new KakaoMap());
 watch(
   () => props.center,
   (latlng) => {
+    if (!latlng) return;
     map.setCenter(latlng.latitude, latlng.longitude);
   }
 );
@@ -20,7 +21,7 @@ watch(
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent("custom-overlay", props.content);
+  map.setClickEvent("overlay", props.content);
 };
 
 onMounted(() => {
