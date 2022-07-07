@@ -20,7 +20,7 @@ export default class KakaoMap {
     this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 
-  setClickEvent(type: string, content?: string) {
+  setClickEvent(type: string, message?: string) {
     if (!this.map) return;
     const markers = this.markers;
     const map = this.map;
@@ -56,17 +56,7 @@ export default class KakaoMap {
         break;
       }
       case "custom-overlay": {
-        const marker = new kakao.maps.Marker({
-          position: map.getCenter(),
-        });
-        marker.setMap(map);
-
-        const newDiv = document.createElement("div");
-        const newContent = document.createTextNode("안녕?");
-        newDiv.appendChild(newContent);
-
-        const customContent = new DOMParser().parseFromString(
-          `
+        const customOverlay = `
 <div class="wrap">
       <div class="info">
           <div class="title">
@@ -78,26 +68,31 @@ export default class KakaoMap {
                   <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
              </div>
               <div class="desc">
-                  <div class="ellipsis">제주특별자치도 제주시 첨단로 242</div>
+                  <div class="ellipsis">${message}</div>
                   <div class="jibun ellipsis">(우) 63309 (지번) 영평동 2181</div>
                   <div><a href="https://www.kakaocorp.com/main" target="_blank" class="link">홈페이지</a></div>
               </div>
           </div>
       </div>
-  </div>`,
+  </div>`;
+
+        const marker = new kakao.maps.Marker({
+          position: map.getCenter(),
+        });
+        marker.setMap(map);
+
+        const newDiv = document.createElement("div");
+        const parse = new DOMParser().parseFromString(
+          customOverlay,
           "text/html"
         );
-
-        const htmlNode = customContent.childNodes[0];
-        const bodyNode = htmlNode.childNodes[1];
-        const nWrap = bodyNode.childNodes[0];
-        const closeBtn = nWrap.childNodes[1].childNodes[1].childNodes[1];
+        const content = parse.childNodes[0].childNodes[1].childNodes[0];
+        const closeBtn = content.childNodes[1].childNodes[1].childNodes[1];
         closeBtn.addEventListener("click", () => {
-          console.log(this.overlays);
           this.overlays[0].setMap(null);
           this.overlays.pop();
         });
-        newDiv.appendChild(nWrap);
+        newDiv.appendChild(content);
 
         kakao.maps.event.addListener(marker, "click", function () {
           const overlay = new kakao.maps.CustomOverlay({
