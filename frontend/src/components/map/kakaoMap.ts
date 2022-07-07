@@ -42,54 +42,7 @@ export default class KakaoMap {
         break;
       }
       case "custom-overlay": {
-        const customOverlay = `
-<div class="wrap">
-      <div class="info">
-          <div class="title">
-              ${overlayOption.title}
-              <div class="close" title="닫기"></div>
-          </div>
-          <div class="body">
-              <div class="img">
-                  <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
-             </div>
-              <div class="desc">
-                  <div class="ellipsis">${overlayOption.message}</div>
-                  <div class="jibun ellipsis">${overlayOption.address}</div>
-                  <div><a href="${overlayOption.url}" target="_blank" class="link">홈페이지</a></div>
-              </div>
-          </div>
-      </div>
-  </div>`;
-
-        const marker = new kakao.maps.Marker({
-          position: map.getCenter(),
-        });
-        marker.setMap(map);
-
-        const newDiv = document.createElement("div");
-        const parse = new DOMParser().parseFromString(
-          customOverlay,
-          "text/html"
-        );
-        const content = parse.childNodes[0].childNodes[1].childNodes[0];
-        const closeBtn = content.childNodes[1].childNodes[1].childNodes[1];
-        closeBtn.addEventListener("click", () => {
-          this.overlays[0].setMap(null);
-          this.overlays.pop();
-        });
-        newDiv.appendChild(content);
-
-        kakao.maps.event.addListener(marker, "click", function () {
-          const overlay = new kakao.maps.CustomOverlay({
-            content: newDiv,
-            map: map,
-            position: marker.getPosition(),
-          });
-
-          overlay.setMap(map);
-          overlays.push(overlay);
-        });
+        customOverlay(map, overlays, overlayOption);
         break;
       }
       default: {
@@ -125,4 +78,56 @@ function multiMarkerEvent(map: kakao.maps.Map, markers: kakao.maps.Marker[]) {
       markers.push(marker);
     }
   );
+}
+
+function customOverlay(
+  map: kakao.maps.Map,
+  overlays: kakao.maps.CustomOverlay[],
+  op: OverlayOption
+) {
+  const customOverlay = `
+<div class="wrap">
+      <div class="info">
+          <div class="title">
+              ${op.title}
+              <div class="close" title="닫기"></div>
+          </div>
+          <div class="body">
+              <div class="img">
+                  <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
+             </div>
+              <div class="desc">
+                  <div class="ellipsis">${op.message}</div>
+                  <div class="jibun ellipsis">${op.address}</div>
+                  <div><a href="${op.url}" target="_blank" class="link">홈페이지</a></div>
+              </div>
+          </div>
+      </div>
+  </div>`;
+
+  const marker = new kakao.maps.Marker({
+    position: map.getCenter(),
+  });
+  marker.setMap(map);
+
+  const newDiv = document.createElement("div");
+  const parse = new DOMParser().parseFromString(customOverlay, "text/html");
+  const content = parse.childNodes[0].childNodes[1].childNodes[0];
+  const closeBtn = content.childNodes[1].childNodes[1].childNodes[1];
+  closeBtn.addEventListener("click", () => {
+    overlays[0].setMap(null);
+    overlays.pop();
+  });
+  newDiv.appendChild(content);
+
+  kakao.maps.event.addListener(marker, "click", function () {
+    const overlay = new kakao.maps.CustomOverlay({
+      content: newDiv,
+      map: map,
+      position: marker.getPosition(),
+    });
+
+    overlay.setMap(map);
+    overlays.push(overlay);
+  });
 }
