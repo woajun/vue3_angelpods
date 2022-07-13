@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import TopNav from "@/components/TopNav.vue";
-import AIcons from "../components/AIcons.vue";
+import TopNav from "@/components/navs/TopNav.vue";
+import AIcons from "@/components/AIcons.vue";
 import ChoiceLocationModal from "./ChoiceLocationModal.vue";
 import { ref } from "vue";
 

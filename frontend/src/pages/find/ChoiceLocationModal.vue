@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import KakaoMap from "@/components/KakaoMap.vue";
+import KakaoMap from "@/components/map/KakaoMap.vue";
 import { defineEmits, ref } from "vue";
 
 /* global kakao */
