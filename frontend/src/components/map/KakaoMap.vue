@@ -6,9 +6,17 @@ const props = defineProps<{
   markerType?: string;
   content?: string;
   refresh?: boolean;
+  relayout?: boolean;
 }>();
 
-const emit = defineEmits(["here"]);
+watch(
+  () => props.relayout,
+  (isRelayout) => {
+    if (isRelayout) map.relayout();
+  }
+);
+
+const emit = defineEmits(["here", "relayout"]);
 
 const container = ref<HTMLDivElement | null>(null);
 const map = reactive(new KakaoMap());
@@ -28,9 +36,8 @@ const initMap = function () {
 };
 
 const here = function () {
-  console.log("여기");
+  map.setCenter(33.452613, 126.570888);
 };
-
 emit("here", here);
 
 window.kakao.maps.load(initMap);
@@ -42,7 +49,7 @@ initMap();
 </template>
 <style>
 #map {
-  height: 500px;
+  height: 100%;
   width: 100%;
 }
 </style>

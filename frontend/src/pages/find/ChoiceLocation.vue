@@ -225,10 +225,7 @@ const modalShow = ref(false);
 .modal-body {
   height: 80vh;
 }
-#map {
-  width: 100%;
-  height: 100%;
-}
+
 .bAddr {
   padding: 5px;
   text-overflow: ellipsis;

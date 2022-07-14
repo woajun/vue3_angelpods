@@ -24,7 +24,7 @@ let here: () => void;
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap @here="(e) => (here = e)"></KakaoMap>/>
+          <KakaoMap :relayout="modelValue" @here="(e) => (here = e)" />
           <MapSearcher />
 
           <div class="curBtn text-end">

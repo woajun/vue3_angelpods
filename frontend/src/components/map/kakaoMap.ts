@@ -28,6 +28,13 @@ export default class KakaoMap {
     this.map?.setCenter(new kakao.maps.LatLng(lat, lng));
   }
 
+  relayout() {
+    setTimeout(() => this.map?.relayout(), 50);
+    setTimeout(() => this.map?.relayout(), 100);
+    setTimeout(() => this.map?.relayout(), 200);
+    setTimeout(() => this.map?.relayout(), 300);
+  }
+
   setClickEvent(type: string, overlayOption: OverlayOption) {
     if (!this.map) return;
     switch (type) {
