@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import TopNav from "@/components/navs/TopNav.vue";
 import BottomNav from "@/components/navs/BottomNav.vue";
 import KakaoMap from "@/components/map/KakaoMap.vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function routerPush(path: string) {
+  router.push({
+    path,
+  });
+}
 </script>
 <template>
   <div>
-    <TopNav />
-
     <!--지도-->
     <KakaoMap
       id="map"
@@ -313,7 +319,7 @@ import MapSearcher from "@/components/map/MapSearcher.vue";
     <button
       id="btn_write"
       type="button"
-      onclick="javascript:window.location='f_write_view.do'"
+      @click="routerPush('/find/create')"
       class="btn btn-primary btn-xl"
       style="position: fixed; right: 4vh"
     >
