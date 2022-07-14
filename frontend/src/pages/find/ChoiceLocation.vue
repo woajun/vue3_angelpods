@@ -12,7 +12,7 @@ const modalShow = ref(false);
   <div style="padding-top: 50px"></div>
 
   <!-- 습득 게시물 등록 -->
-  <form action="f_write_action.do" method="post" enctype="multipart/form-data">
+  <form>
     <div class="container my-3"></div>
     <div class="text-center">
       <h3>습득 게시물 등록</h3>
@@ -54,24 +54,11 @@ const modalShow = ref(false);
                 <div class="col-6">
                   <select id="cNum" name="cNum" class="form-select" required>
                     <option selected disabled value="">대분류</option>
-                    <c:forEach items="${cList}" var="cDto">
-                      <option value="${cDto.cNum}">${cDto.name}</option>
-                    </c:forEach>
                   </select>
                 </div>
                 <div class="col-6">
                   <select id="cdNum" name="cdNum" class="form-select" required>
                     <option selected disabled value="">소분류</option>
-                    <c:forEach items="${cdList}" var="cdDto">
-                      <option
-                        class="cdItems"
-                        value="${cdDto.cdNum}"
-                        label="${cdDto.name}"
-                        hidden="true"
-                      >
-                        ${cdDto.cNum}/${cdDto.needSN}
-                      </option>
-                    </c:forEach>
                   </select>
                 </div>
               </div>
