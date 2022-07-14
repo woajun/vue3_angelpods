@@ -35,7 +35,7 @@ export default class KakaoMap {
     setTimeout(() => this.map?.relayout(), 300);
   }
 
-  setClickEvent(type: string, overlayOption: OverlayOption) {
+  setClickEvent(type: string, overlayOption?: OverlayOption) {
     if (!this.map) return;
     switch (type) {
       case "single-marker": {
@@ -47,7 +47,7 @@ export default class KakaoMap {
         break;
       }
       case "custom-overlay": {
-        customOverlay(this.map, this.overlays, overlayOption);
+        customOverlay(this.map, this.overlays);
         break;
       }
       default: {
@@ -87,14 +87,13 @@ function multiMarkerEvent(map: kakao.maps.Map, markers: kakao.maps.Marker[]) {
 
 function customOverlay(
   map: kakao.maps.Map,
-  overlays: kakao.maps.CustomOverlay[],
-  op: OverlayOption
+  overlays: kakao.maps.CustomOverlay[]
 ) {
   const customOverlay = `
 <div class="wrap">
       <div class="info">
           <div class="title">
-              ${op.title}
+              {op.title}
               <div class="close" title="닫기"></div>
           </div>
           <div class="body">
@@ -102,9 +101,9 @@ function customOverlay(
                   <img src="https://cfile181.uf.daum.net/image/250649365602043421936D" width="73" height="70">
              </div>
               <div class="desc">
-                  <div class="ellipsis">${op.message}</div>
-                  <div class="jibun ellipsis">${op.address}</div>
-                  <div><a href="${op.url}" target="_blank" class="link">홈페이지</a></div>
+                  <div class="ellipsis">{op.message}</div>
+                  <div class="jibun ellipsis">{op.address}</div>
+                  <div><a href="{op.url}" target="_blank" class="link">홈페이지</a></div>
               </div>
           </div>
       </div>

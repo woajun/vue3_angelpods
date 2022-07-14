@@ -24,7 +24,41 @@ let here: () => void;
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap :relayout="modelValue" @here="(e) => (here = e)" />
+          <KakaoMap
+            :relayout="modelValue"
+            @here="(e) => (here = e)"
+            :marker-type="'custom-overlay'"
+          >
+            <template #overlay>
+              <div class="wrap">
+                <div class="info">
+                  <div class="title">
+                    {op.title}
+                    <div class="close" title="닫기"></div>
+                  </div>
+                  <div class="body">
+                    <div class="img">
+                      <img
+                        src="https://cfile181.uf.daum.net/image/250649365602043421936D"
+                        width="73"
+                        height="70"
+                      />
+                    </div>
+                    <div class="desc">
+                      <div class="ellipsis">{op.message}</div>
+                      <div class="jibun ellipsis">{op.address}</div>
+                      <div>
+                        <a href="{op.url}" target="_blank" class="link"
+                          >홈페이지</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </KakaoMap>
+
           <MapSearcher />
 
           <div class="curBtn text-end">

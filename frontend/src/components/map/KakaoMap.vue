@@ -3,11 +3,19 @@ import { ref, defineProps, defineEmits, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
   center?: { latitude: number; longitude: number };
-  markerType?: string;
-  content?: string;
+  markerType?: "single-marker" | "multi-markers" | "custom-overlay";
+  overlayOption?: OverlayOption;
   refresh?: boolean;
   relayout?: boolean;
 }>();
+
+interface OverlayOption {
+  title?: string;
+  imgUrl?: string;
+  message?: string;
+  address?: string;
+  url?: string;
+}
 
 watch(
   () => props.relayout,
@@ -32,7 +40,9 @@ watch(
 const initMap = function () {
   if (!container.value) return;
   map.container = container.value;
-  map.setClickEvent(props.markerType, props.content);
+  if (props.markerType) {
+    map.setClickEvent(props.markerType, props.overlayOption);
+  }
 };
 
 const here = function () {
@@ -46,6 +56,7 @@ initMap();
 
 <template>
   <div id="map" ref="container" />
+  <slot name="overlay" />
 </template>
 <style>
 #map {
