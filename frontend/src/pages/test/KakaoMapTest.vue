@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import KakaoMap from "./KakaoMap.vue";
+import KakaoMap from "../../components/map/KakaoMap.vue";
 import KakaoContent from "./KakaoContent.vue";
 
 const center = ref({ latitude: 33.452278, longitude: 126.567803 });

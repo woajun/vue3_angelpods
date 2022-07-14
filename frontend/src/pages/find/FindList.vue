@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import TopNav from "./TopNav.vue";
-import BottomNav from "./BottomNav.vue";
-import KakaoMap from "./KakaoMap.vue";
-import MapSearcher from "./MapSearcher.vue";
+import TopNav from "../../components/TopNav.vue";
+import BottomNav from "../../components/BottomNav.vue";
+import KakaoMap from "../components/KakaoMap.vue";
+import MapSearcher from "../components/MapSearcher.vue";
 </script>
 <template>
   <div>
