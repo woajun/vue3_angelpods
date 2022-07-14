@@ -1,61 +1,15 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
 import KakaoMap from "@/components/map/KakaoMap.vue";
-import { defineEmits, ref } from "vue";
+import { defineProps } from "vue";
 
-/* global kakao */
-const map = ref<kakao.maps.Map>();
-const emit = defineEmits<{
-  (e: "openModal", openModal: () => void): void;
+defineProps<{
+  modelValue: boolean;
 }>();
-const openModal = function () {
-  setTimeout(function () {
-    map.value?.relayout();
-  }, 500);
-};
-
-const paintMarker = function (latlng: kakao.maps.LatLng) {
-  const geocoder = new kakao.maps.services.Geocoder();
-  geocoder.coord2Address(latlng.getLng(), latlng.getLat(), (result, status) => {
-    if (status === kakao.maps.services.Status.OK) {
-      let detailAddr = result[0].road_address
-        ? "<span>" + result[0].road_address.address_name + "</span></br>"
-        : "";
-      detailAddr +=
-        '<span class="jibun gray"> ' +
-        result[0].address.address_name +
-        "</span>";
-      let content =
-        '<div class="bAddr" style="font-size:15px;">' +
-        '<span class="">습득한 곳이 이곳인가요?</span></br>' +
-        '<div class="info pb-0">' +
-        detailAddr +
-        '</br></div><div class="text-center">' +
-        '<button type="button" class="btn btn-dark" data-bs-dismiss="modal" onclick="markerClick()">입력</button>' +
-        "</div>" +
-        "</div>";
-      const markerOption: kakao.maps.MarkerOptions = {
-        map: map.value,
-        position: latlng,
-      };
-      new kakao.maps.Marker(markerOption);
-    }
-  });
-};
-
-emit("openModal", openModal);
 </script>
 <template>
   <!-- Modal -->
-  <div
-    class="modal fade"
-    id="staticBackdrop"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
+  <div :class="{ show: modelValue }" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -63,8 +17,7 @@ emit("openModal", openModal);
           <button
             type="button"
             class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
+            @click="() => $emit('update:modelValue', false)"
           ></button>
         </div>
         <div class="modal-body">
@@ -145,3 +98,8 @@ emit("openModal", openModal);
     </div>
   </div>
 </template>
+<style>
+.show {
+  display: block;
+}
+</style>

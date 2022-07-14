@@ -4,7 +4,7 @@ import AIcons from "@/components/AIcons.vue";
 import ChoiceLocationModal from "./ChoiceLocationModal.vue";
 import { ref } from "vue";
 
-const openModal = ref<() => void>();
+const modalShow = ref(false);
 </script>
 <template>
   <!-- nav -->
@@ -88,13 +88,11 @@ const openModal = ref<() => void>();
             </div>
 
             <div class="col-12 mt-3">
-              <label class="fw-bold">위치</label>
+              <label class="fw-bold">위치{{ modalShow }}</label>
               <button
                 type="button"
                 class="form-control form-control-hover"
-                data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"
-                @click="openModal!()"
+                @click="() => (modalShow = true)"
               >
                 <div class="row justify-content-between">
                   <div class="col-8 text-start">
@@ -107,7 +105,7 @@ const openModal = ref<() => void>();
               </button>
             </div>
 
-            <ChoiceLocationModal @openModal="(e) => (openModal = e)" />
+            <ChoiceLocationModal v-model="modalShow" />
 
             <div class="col-12 mt-1">
               <input
