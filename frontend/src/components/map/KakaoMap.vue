@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, defineProps, reactive, watch } from "vue";
+import { ref, defineProps, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
   center?: { latitude: number; longitude: number };
-  markerType: string;
+  markerType?: string;
   content?: string;
 }>();
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import BottomNav from "@/components/navs/BottomNav.vue";
 import KakaoMap from "@/components/map/KakaoMap.vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
 import { useRouter } from "vue-router";
@@ -16,61 +15,8 @@ function routerPush(path: string) {
 <template>
   <div>
     <!--지도-->
-    <KakaoMap
-      id="map"
-      :center="{ latitude: 37.566826, longitude: 126.9786567, level: 3 }"
-    />
+    <KakaoMap :center="{ latitude: 37.566826, longitude: 126.9786567 }" />
     <MapSearcher />
-    <template>
-      <div id="menu_wrap" class="bg_white">
-        <div class="option">
-          <form @submit.prevent="searchPlaces(keyword ?? '')">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="위치 검색"
-                size="15"
-              />
-              <button class="btn btn-outline-dark" type="submit">
-                <AIcons type="search" />
-              </button>
-            </div>
-          </form>
-        </div>
-        <hr />
-
-        <div class="accordion accordion-flush" id="accordionFlushExample">
-          <div
-            class="accordion-item"
-            style="background-color: rgba(255, 255, 255, 0)"
-          >
-            <h2 class="accordion-header" id="flush-headingOne">
-              <button
-                id="placesListBtn"
-                class="accordion-button collapsed py-0"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseOne"
-                aria-expanded="false"
-                aria-controls="flush-collapseOne"
-              >
-                접기/펴기
-              </button>
-            </h2>
-            <div
-              id="flush-collapseOne"
-              class="accordion-collapse collapse"
-              aria-labelledby="flush-headingOne"
-              data-bs-parent="#accordionFlushExample"
-            >
-              <ul id="placesList"></ul>
-              <div id="pagination"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
     <!-- 게시판 -->
     <div id="layoutSidenav">
       <div id="layoutSidenav_nav" class="bg-light">
