@@ -7,6 +7,8 @@ import MapSearcher from "@/components/map/MapSearcher.vue";
 defineProps<{
   modelValue: boolean;
 }>();
+
+let here: () => void;
 </script>
 <template>
   <!-- Modal -->
@@ -22,15 +24,11 @@ defineProps<{
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap />
+          <KakaoMap @here="(e) => (here = e)"></KakaoMap>/>
           <MapSearcher />
 
           <div class="curBtn text-end">
-            <button
-              type="button"
-              class="btn btn-dark"
-              onclick="curPositionBtn()"
-            >
+            <button type="button" class="btn btn-dark" @click="here()">
               현위치
               <AIcons type="location" />
             </button>

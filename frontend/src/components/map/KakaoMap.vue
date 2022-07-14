@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { ref, defineProps, reactive, watch } from "vue";
+import { ref, defineProps, defineEmits, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
   center?: { latitude: number; longitude: number };
   markerType?: string;
   content?: string;
+  refresh?: boolean;
 }>();
+
+const emit = defineEmits(["here"]);
 
 const container = ref<HTMLDivElement | null>(null);
 const map = reactive(new KakaoMap());
@@ -23,6 +26,12 @@ const initMap = function () {
   map.container = container.value;
   map.setClickEvent(props.markerType, props.content);
 };
+
+const here = function () {
+  console.log("여기");
+};
+
+emit("here", here);
 
 window.kakao.maps.load(initMap);
 initMap();
