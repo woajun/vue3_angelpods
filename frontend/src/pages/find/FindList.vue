@@ -325,8 +325,6 @@ function routerPush(path: string) {
     >
       글쓰기
     </button>
-
-    <BottomNav />
   </div>
 </template>
 <style>
