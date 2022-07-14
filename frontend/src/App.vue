@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import ChoiceLocationVue from "./pages/find/ChoiceLocation.vue";
+import TopNav from "./components/navs/TopNav.vue";
 </script>
 <template>
-  <ChoiceLocationVue />
+  <TopNav></TopNav>
+  <RouterView></RouterView>
 </template>
