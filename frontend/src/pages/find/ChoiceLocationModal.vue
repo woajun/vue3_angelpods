@@ -25,7 +25,9 @@ const marker = ref();
         <div class="modal-body">
           {{ marker }}
           <KMap>
-            <KMapMarker v-model="marker"></KMapMarker>
+            <template #marker="map">
+              <KMapMarker v-model="marker" :map="map.map"></KMapMarker>
+            </template>
           </KMap>
         </div>
       </div>
