@@ -13,6 +13,10 @@ const markerLatLng = ref<kakao.maps.LatLng | null>(null);
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = e.latLng;
 }
+
+function apple() {
+  console.log("aaaaaaa");
+}
 </script>
 <template>
   <!-- Modal -->
@@ -30,7 +34,15 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
         <div class="modal-body">
           <KMap @click="mapClickEvent" v-slot="map">
             <KMapMarker :map="map.map" :position="markerLatLng">
-              hello!
+              <div class="bAddr" style="font-size: 15px">
+                <span>습득한 곳이 이곳인가요?</span>
+                <div class="info pb-0"><br /></div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-dark" @click="apple">
+                    입력
+                  </button>
+                </div>
+              </div>
             </KMapMarker>
           </KMap>
         </div>
@@ -41,5 +53,11 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
 <style>
 .show {
   display: block;
+}
+.bAddr {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 </style>
