@@ -2,6 +2,7 @@
 import { onMounted, ref, withDefaults, defineProps } from "vue";
 /* global kakao */
 const container = ref();
+const map = ref<kakao.maps.Map>();
 interface Props {
   options?: kakao.maps.MapOptions;
 }
@@ -9,14 +10,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 
 function createMap() {
-  new window.kakao.maps.Map(container.value, {
+  map.value = new window.kakao.maps.Map(container.value, {
     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   });
 }
 
 const resizeObserver = new ResizeObserver(() => {
-  console.log("size changed");
+  map.value?.relayout();
 });
 
 onMounted(() => {
