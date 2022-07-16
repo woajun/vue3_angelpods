@@ -2,7 +2,7 @@
 import { onMounted, ref, withDefaults, defineProps, defineEmits } from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();
-const map = ref<kakao.maps.Map>();
+const map = ref<kakao.maps.Map | null>(null);
 
 interface Props {
   options?: kakao.maps.MapOptions;

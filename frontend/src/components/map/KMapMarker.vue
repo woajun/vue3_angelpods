@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, watch, ref } from "vue";
+import { defineProps, watch, ref } from "vue";
 /* global kakao */
 interface Props {
-  modelValue?: object;
-  map?: kakao.maps.Map;
+  map: kakao.maps.Map | null;
+  position: kakao.maps.LatLng | null;
 }
 const props = defineProps<Props>();
-defineEmits(["update:modelValue"]);
 
 watch(
   () => props.map,

@@ -8,8 +8,10 @@ defineProps<{
   modelValue: boolean;
 }>();
 
+const markerLatLng = ref<kakao.maps.LatLng | null>(null);
+
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  console.log(e.latLng);
+  markerLatLng.value = e.latLng;
 }
 </script>
 <template>
@@ -27,7 +29,9 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
         </div>
         <div class="modal-body">
           <KMap @click="mapClickEvent" v-slot="map">
-            <KMapMarker :map="map.map"> hello! </KMapMarker>
+            <KMapMarker :map="map.map" :position="markerLatLng">
+              hello!
+            </KMapMarker>
           </KMap>
         </div>
       </div>
