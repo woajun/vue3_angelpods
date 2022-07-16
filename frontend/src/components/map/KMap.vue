@@ -27,6 +27,7 @@ onMounted(() => {
 </script>
 <template>
   <div id="map" ref="container" />
+  <slot />
 </template>
 <style>
 #map {

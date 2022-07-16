@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { defineProps, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
+import KMapMarker from "@/components/map/KMapMarker.vue";
 
 defineProps<{
   modelValue: boolean;
 }>();
 
-const picked = ref();
+const marker = ref();
 </script>
 <template>
   <!-- Modal -->
@@ -22,8 +23,10 @@ const picked = ref();
           ></button>
         </div>
         <div class="modal-body">
-          {{ picked }}
-          <KMap />
+          {{ marker }}
+          <KMap>
+            <KMapMarker v-model="marker"></KMapMarker>
+          </KMap>
         </div>
       </div>
     </div>
