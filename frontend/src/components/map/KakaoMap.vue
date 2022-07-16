@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, reactive, watch } from "vue";
+import { ref, defineProps, defineEmits, reactive, watch, onMounted } from "vue";
 import KakaoMap from "./kakaoMap";
 const props = defineProps<{
   center?: { latitude: number; longitude: number };
@@ -57,6 +57,12 @@ initMap();
 <template>
   <div id="map" ref="container" />
   <slot name="overlay" />
+  <div class="curBtn text-end">
+    <button type="button" class="btn btn-dark" @click="here()">
+      현위치
+      <AIcons type="location" />
+    </button>
+  </div>
 </template>
 <style>
 #map {

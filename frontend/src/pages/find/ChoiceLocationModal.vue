@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AIcons from "@/components/AIcons.vue";
 import KakaoMap from "@/components/map/KakaoMap.vue";
 import { defineProps } from "vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
@@ -7,8 +6,6 @@ import MapSearcher from "@/components/map/MapSearcher.vue";
 defineProps<{
   modelValue: boolean;
 }>();
-
-let here: () => void;
 </script>
 <template>
   <!-- Modal -->
@@ -24,11 +21,7 @@ let here: () => void;
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap
-            :relayout="modelValue"
-            @here="(e) => (here = e)"
-            :marker-type="'custom-overlay'"
-          >
+          <KakaoMap :relayout="modelValue" :marker-type="'custom-overlay'">
             <template #overlay>
               <div class="wrap">
                 <div class="info">
@@ -60,13 +53,6 @@ let here: () => void;
           </KakaoMap>
 
           <MapSearcher />
-
-          <div class="curBtn text-end">
-            <button type="button" class="btn btn-dark" @click="here()">
-              현위치
-              <AIcons type="location" />
-            </button>
-          </div>
         </div>
       </div>
     </div>
