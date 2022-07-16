@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import KakaoMap from "@/components/map/KakaoMap.vue";
-import { defineProps } from "vue";
+import { defineProps, ref } from "vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
 
 defineProps<{
   modelValue: boolean;
 }>();
+
+const picked = ref();
 </script>
 <template>
   <!-- Modal -->
@@ -21,7 +23,8 @@ defineProps<{
           ></button>
         </div>
         <div class="modal-body">
-          <KakaoMap :relayout="modelValue" />
+          {{ picked }}
+          <KakaoMap v-model:picked="picked" :relayout="modelValue" />
           <MapSearcher />
         </div>
       </div>

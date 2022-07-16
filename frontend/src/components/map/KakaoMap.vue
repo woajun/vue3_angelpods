@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineProps, defineEmits, reactive, watch, onMounted } from "vue";
+import { ref, defineProps, defineEmits, reactive, watch } from "vue";
 import KakaoMap from "./kakaoMap";
 import AIcons from "@/components/AIcons.vue";
 const props = defineProps<{
@@ -8,7 +8,10 @@ const props = defineProps<{
   overlayOption?: OverlayOption;
   refresh?: boolean;
   relayout?: boolean;
+  picked?: object;
 }>();
+
+const emit = defineEmits(["here", "relayout", "update:picked"]);
 
 interface OverlayOption {
   title?: string;
@@ -24,8 +27,6 @@ watch(
     if (isRelayout) map.relayout();
   }
 );
-
-const emit = defineEmits(["here", "relayout"]);
 
 const container = ref<HTMLDivElement | null>(null);
 const map = reactive(new KakaoMap());
