@@ -2,6 +2,7 @@
 import { defineProps, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
+import KMapSearcher from "@/components/map/KMapSearcher.vue";
 /* global kakao */
 
 defineProps<{
@@ -10,6 +11,7 @@ defineProps<{
 
 const address = ref<kakao.maps.services.RoadAaddress | null>(null);
 const markerLatLng = ref<kakao.maps.LatLng | null>(null);
+const keyword = ref("성동구 맛집");
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = e.latLng;
@@ -39,6 +41,9 @@ function apple() {
         </div>
         <div class="modal-body">
           <KMap @click="mapClickEvent" v-slot="map">
+            <KMapSearcher v-model="keyword" :map="map.map">
+              hello
+            </KMapSearcher>
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
@@ -56,7 +61,7 @@ function apple() {
     </div>
   </div>
 </template>
-<style>
+<style scoped>
 .show {
   display: block;
 }
@@ -65,5 +70,53 @@ function apple() {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+/* ------------------------------------------- */
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 95%;
+    margin: 1.75rem auto;
+  }
+}
+.modal-header {
+  padding: 0.4rem 1rem;
+}
+.modal-body {
+  height: 80vh;
+}
+
+.bAddr {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.curBtn {
+  position: absolute;
+  right: 3vh;
+  top: 3vh;
+  border-radius: 2px;
+  z-index: 1;
+  padding: 5px;
+}
+.map_wrap,
+.map_wrap * {
+  margin: 0;
+  padding: 0;
+  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  font-size: 12px;
+}
+.map_wrap a,
+.map_wrap a:hover,
+.map_wrap a:active {
+  color: #000;
+  text-decoration: none;
+}
+.map_wrap {
+  position: relative;
+  width: 100%;
+  height: 500px;
 }
 </style>
