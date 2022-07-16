@@ -5,37 +5,33 @@ import { ref, defineProps, watch, defineEmits } from "vue";
 
 interface Props {
   map: kakao.maps.Map | null;
-  modelValue: string;
 }
 
 const props = defineProps<Props>();
-const emit = defineEmits(["update:modelValue"]);
 
+const keyword = ref("이태원 맛집");
 const markers = ref([]);
 const result = ref<kakao.maps.services.PlacesSearchResult>([]);
-
+const placeService = ref<kakao.maps.services.Places | null>(null);
 watch(
   () => props.map,
   (newMap) => {
     if (!newMap) return;
-    const ps = new window.kakao.maps.services.Places();
+    placeService.value = new window.kakao.maps.services.Places();
     const infowindow = new window.kakao.maps.InfoWindow({
       zIndex: 1,
       content: "",
       position: newMap?.getCenter(),
     });
-    searchPlaces(ps);
+    searchPlaces();
   }
 );
-function searchPlaces(ps: kakao.maps.services.Places) {
-  const keyword = props.modelValue;
+function searchPlaces() {
+  if (!placeService.value) return;
+  if (!keyword.value.replace(/^\s+|\s+$/g, ""))
+    return alert("키워드를 입력해주세요!");
 
-  if (!keyword.replace(/^\s+|\s+$/g, "")) {
-    alert("키워드를 입력해주세요!");
-    return false;
-  }
-
-  ps.keywordSearch(keyword, placesSearchCB);
+  placeService.value.keywordSearch(keyword.value, placesSearchCB);
 }
 
 function placesSearchCB(
@@ -54,19 +50,18 @@ function placesSearchCB(
 <template>
   <div id="menu_wrap" class="bg_white">
     <div class="option">
-      <form>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="위치 검색"
-            size="15"
-          />
-          <button class="btn btn-outline-dark" type="submit">
-            <AIcons type="search" />
-          </button>
-        </div>
-      </form>
+      <div class="input-group">
+        <input
+          v-model="keyword"
+          type="text"
+          class="form-control"
+          placeholder="위치 검색"
+          size="15"
+        />
+        <button class="btn btn-outline-dark" @click="searchPlaces">
+          <AIcons type="search" />
+        </button>
+      </div>
     </div>
     <hr />
 
@@ -99,6 +94,7 @@ function placesSearchCB(
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
   width: 300px;
   margin: 10px 0 40px 10px;
   padding: 5px;

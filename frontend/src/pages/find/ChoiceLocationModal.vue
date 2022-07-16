@@ -11,7 +11,6 @@ defineProps<{
 
 const address = ref<kakao.maps.services.RoadAaddress | null>(null);
 const markerLatLng = ref<kakao.maps.LatLng | null>(null);
-const keyword = ref("성동구 맛집");
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = e.latLng;
@@ -41,9 +40,7 @@ function apple() {
         </div>
         <div class="modal-body">
           <KMap @click="mapClickEvent" v-slot="map">
-            <KMapSearcher v-model="keyword" :map="map.map">
-              hello
-            </KMapSearcher>
+            <KMapSearcher :map="map.map"> hello </KMapSearcher>
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
