@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits, reactive, watch, onMounted } from "vue";
 import KakaoMap from "./kakaoMap";
+import AIcons from "@/components/AIcons.vue";
 const props = defineProps<{
   center?: { latitude: number; longitude: number };
   markerType?: "single-marker" | "multi-markers" | "custom-overlay";
