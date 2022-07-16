@@ -26,7 +26,7 @@ const marker = ref();
           {{ marker }}
           <KMap>
             <template #marker="map">
-              <KMapMarker v-model="marker" :map="map.map"></KMapMarker>
+              <KMapMarker v-model="marker" :map="map.map"> hello! </KMapMarker>
             </template>
           </KMap>
         </div>

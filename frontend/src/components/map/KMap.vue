@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref, withDefaults, defineProps } from "vue";
 /* global kakao */
-const container = ref();
+const container = ref<HTMLElement>();
 const map = ref<kakao.maps.Map>();
+
 interface Props {
   options?: kakao.maps.MapOptions;
 }
@@ -10,6 +11,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 
 function createMap() {
+  if (!container.value) return;
   map.value = new window.kakao.maps.Map(container.value, {
     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
@@ -21,6 +23,7 @@ const resizeObserver = new ResizeObserver(() => {
 });
 
 onMounted(() => {
+  if (!container.value) return;
   kakao.maps.load(createMap);
   resizeObserver.observe(container.value);
 });

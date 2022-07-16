@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, defineEmits, watch } from "vue";
+import { defineProps, defineEmits, watch, ref } from "vue";
 /* global kakao */
 interface Props {
   modelValue?: object;
@@ -26,11 +26,14 @@ function initMarker(map: kakao.maps.Map) {
   kakao.maps.event.addListener(map, "click", clickEvent);
 }
 
-function clickEvent(e: kakao.maps.event.MouseEvent) {
-  const latlng = e.latLng;
-  marker.setPosition(latlng);
+function clickEvent(click: kakao.maps.event.MouseEvent) {
+  marker.setPosition(click.latLng);
 }
+
+const infoWindow = ref<HTMLDivElement>();
 </script>
 <template>
-  <div></div>
+  <div ref="infoWindow">
+    <slot />
+  </div>
 </template>
