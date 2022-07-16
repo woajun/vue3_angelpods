@@ -24,6 +24,17 @@ function initMarker(map: kakao.maps.Map) {
   marker.setMap(map);
 
   kakao.maps.event.addListener(map, "click", clickEvent);
+
+  if (!infoWindow.value) return;
+  const infowindows = new window.kakao.maps.InfoWindow({
+    content: infoWindow.value,
+    removable: true,
+    position: map.getCenter(),
+  });
+
+  kakao.maps.event.addListener(marker, "click", () => {
+    infowindows.open(map, marker);
+  });
 }
 
 function clickEvent(click: kakao.maps.event.MouseEvent) {

@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, reactive, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
+/* global kakao */
 
 defineProps<{
   modelValue: boolean;
 }>();
 
-const marker = ref();
+function mapClickEvent(e: kakao.maps.event.MouseEvent) {
+  console.log(e.latLng);
+}
 </script>
 <template>
   <!-- Modal -->
@@ -23,10 +26,9 @@ const marker = ref();
           ></button>
         </div>
         <div class="modal-body">
-          {{ marker }}
-          <KMap>
+          <KMap @click="mapClickEvent">
             <template #marker="map">
-              <KMapMarker v-model="marker" :map="map.map"> hello! </KMapMarker>
+              <KMapMarker :map="map.map"> hello! </KMapMarker>
             </template>
           </KMap>
         </div>

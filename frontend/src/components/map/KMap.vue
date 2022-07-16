@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, withDefaults, defineProps } from "vue";
+import { onMounted, ref, withDefaults, defineProps, defineEmits } from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();
 const map = ref<kakao.maps.Map>();
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {});
+const emit = defineEmits(["click"]);
 
 function createMap() {
   if (!container.value) return;
@@ -16,6 +17,11 @@ function createMap() {
     center: new window.kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   });
+  kakao.maps.event.addListener(
+    map.value,
+    "click",
+    (e: kakao.maps.event.MouseEvent) => emit("click", e)
+  );
 }
 
 const resizeObserver = new ResizeObserver(() => {
