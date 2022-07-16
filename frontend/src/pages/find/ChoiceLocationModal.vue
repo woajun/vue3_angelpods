@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, reactive, ref } from "vue";
+import { defineProps, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
 /* global kakao */
@@ -8,10 +8,16 @@ defineProps<{
   modelValue: boolean;
 }>();
 
+const address = ref<kakao.maps.services.RoadAaddress | null>(null);
 const markerLatLng = ref<kakao.maps.LatLng | null>(null);
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = e.latLng;
+
+  const geocoder = new window.kakao.maps.services.Geocoder();
+  geocoder.coord2Address(e.latLng.getLng(), e.latLng.getLat(), (result) => {
+    address.value = result[0].road_address;
+  });
 }
 
 function apple() {
@@ -36,7 +42,7 @@ function apple() {
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
-                <div class="info pb-0"><br /></div>
+                <div class="info pb-0">{{ address?.address_name }}</div>
                 <div class="text-center">
                   <button type="button" class="btn btn-dark" @click="apple">
                     입력
