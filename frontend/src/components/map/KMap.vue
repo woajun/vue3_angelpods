@@ -36,7 +36,7 @@ onMounted(() => {
 </script>
 <template>
   <div id="map" ref="container" />
-  <slot name="marker" :map="map"></slot>
+  <slot :map="map"></slot>
 </template>
 <style>
 #map {

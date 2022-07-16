@@ -26,10 +26,8 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
           ></button>
         </div>
         <div class="modal-body">
-          <KMap @click="mapClickEvent">
-            <template #marker="map">
-              <KMapMarker :map="map.map"> hello! </KMapMarker>
-            </template>
+          <KMap @click="mapClickEvent" v-slot="map">
+            <KMapMarker :map="map.map"> hello! </KMapMarker>
           </KMap>
         </div>
       </div>
