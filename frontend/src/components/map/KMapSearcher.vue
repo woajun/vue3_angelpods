@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits } from "vue";
 /* global kakao */
+
+const emit = defineEmits(["result", "itemClick"]);
 
 const keyword = ref("");
 const result = ref<kakao.maps.services.PlacesSearchResult>([]);
 const placeService = ref<kakao.maps.services.Places | null>(null);
+
 function searchPlaces() {
   if (!placeService.value) return;
   if (!keyword.value.replace(/^\s+|\s+$/g, ""))
@@ -25,6 +28,7 @@ function placesSearchCB(
   if (status === error) return alert("검색 결과 중 오류가 발생했습니다.");
   console.log(data);
   result.value = data;
+  emit("result", data);
 }
 
 onMounted(() => {

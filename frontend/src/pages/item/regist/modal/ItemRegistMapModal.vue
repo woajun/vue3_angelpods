@@ -49,6 +49,17 @@ function here() {
     markerLatLng.value = latlng;
   });
 }
+
+function aLatLng(lat: number | string, lng: number | string) {
+  return { latitude: Number(lat), longitude: Number(lng) };
+}
+
+function searchResult(data: kakao.maps.services.PlacesSearchResult) {
+  if (!data[0]) return;
+  const latlng = aLatLng(data[0].y, data[0].x);
+  center.value = latlng;
+  markerLatLng.value = latlng;
+}
 </script>
 <template>
   <!-- Modal -->
@@ -65,7 +76,7 @@ function here() {
         </div>
         <div class="modal-body">
           <KMap :center="center" @click="mapClickEvent" v-slot="map">
-            <KMapSearcher @item-click="itemClick" />
+            <KMapSearcher @item-click="itemClick" @result="searchResult" />
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
