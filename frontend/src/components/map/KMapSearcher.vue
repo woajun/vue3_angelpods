@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import { ref, defineProps, watch, defineEmits } from "vue";
+import { ref, defineProps, watch } from "vue";
 /* global kakao */
 
 interface Props {
@@ -10,7 +10,6 @@ interface Props {
 const props = defineProps<Props>();
 
 const keyword = ref("이태원 맛집");
-const markers = ref([]);
 const result = ref<kakao.maps.services.PlacesSearchResult>([]);
 const placeService = ref<kakao.maps.services.Places | null>(null);
 watch(
@@ -18,11 +17,6 @@ watch(
   (newMap) => {
     if (!newMap) return;
     placeService.value = new window.kakao.maps.services.Places();
-    const infowindow = new window.kakao.maps.InfoWindow({
-      zIndex: 1,
-      content: "",
-      position: newMap?.getCenter(),
-    });
     searchPlaces();
   }
 );
