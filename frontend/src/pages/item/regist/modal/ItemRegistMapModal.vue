@@ -27,7 +27,7 @@ watch(markerLatLng, (newLatLng) => {
 });
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  const latlng = { latitude: e.latLng.getLat(), longitude: e.latLng.getLng() };
+  const latlng = aLatLng(e.latLng.getLat(), e.latLng.getLng());
   markerLatLng.value = latlng;
   center.value = latlng;
 }
@@ -37,14 +37,13 @@ function apple() {
 }
 
 function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
-  const itemLatLng = { latitude: Number(item.y), longitude: Number(item.x) };
-  center.value = itemLatLng;
-  markerLatLng.value = itemLatLng;
+  center.value = aLatLng(item.y, item.x);
+  markerLatLng.value = aLatLng(item.y, item.x);
 }
 
 function here() {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
-    const latlng = { latitude: coords.latitude, longitude: coords.longitude };
+    const latlng = aLatLng(coords.latitude, coords.longitude);
     center.value = latlng;
     markerLatLng.value = latlng;
   });
@@ -56,9 +55,8 @@ function aLatLng(lat: number | string, lng: number | string) {
 
 function searchResult(data: kakao.maps.services.PlacesSearchResult) {
   if (!data[0]) return;
-  const latlng = aLatLng(data[0].y, data[0].x);
-  center.value = latlng;
-  markerLatLng.value = latlng;
+  center.value = aLatLng(data[0].y, data[0].x);
+  markerLatLng.value = aLatLng(data[0].y, data[0].x);
 }
 </script>
 <template>
