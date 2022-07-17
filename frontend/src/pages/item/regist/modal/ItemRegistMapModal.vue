@@ -22,7 +22,6 @@ const center = ref({
 watch(markerLatLng, (latlng) => {
   if (!latlng) return;
   center.value = latlng;
-  getAddress(latlng.latitude, latlng.longitude, updateMarkerMessage);
 });
 
 function updateMarkerMessage(addr: {
@@ -55,6 +54,7 @@ function getAddress(
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
+  getAddress(e.latLng.getLat(), e.latLng.getLng(), updateMarkerMessage);
 }
 
 function submit() {
@@ -70,11 +70,13 @@ function submit() {
 
 function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
   markerLatLng.value = aLatLng(item.y, item.x);
+  markerMessage.value = item.place_name;
 }
 
 function here() {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
     markerLatLng.value = aLatLng(coords.latitude, coords.longitude);
+    getAddress(coords.latitude, coords.longitude, updateMarkerMessage);
   });
 }
 
@@ -83,8 +85,7 @@ function aLatLng(lat: number | string, lng: number | string) {
 }
 
 function searchResult(data: kakao.maps.services.PlacesSearchResult) {
-  if (!data[0]) return;
-  markerLatLng.value = aLatLng(data[0].y, data[0].x);
+  itemClick(data[0]);
 }
 </script>
 <template>

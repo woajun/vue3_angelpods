@@ -26,7 +26,6 @@ function placesSearchCB(
   const error = kakao.maps.services.Status.ERROR;
   if (status === zero) return alert("검색 결과가 존재하지 않습니다.");
   if (status === error) return alert("검색 결과 중 오류가 발생했습니다.");
-  console.log(data);
   result.value = data;
   emit("result", data);
 }
