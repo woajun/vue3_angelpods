@@ -38,7 +38,7 @@ function updateMarkerMessage(addr: {
   markerMessage.value = p1 ?? p2 ?? p3;
 }
 
-function getAddress(
+function useGeocoder(
   lat: number,
   lng: number,
   callback: (address: {
@@ -54,7 +54,7 @@ function getAddress(
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
-  getAddress(e.latLng.getLat(), e.latLng.getLng(), updateMarkerMessage);
+  useGeocoder(e.latLng.getLat(), e.latLng.getLng(), updateMarkerMessage);
 }
 
 function submit() {
@@ -76,7 +76,7 @@ function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
 function here() {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
     markerLatLng.value = aLatLng(coords.latitude, coords.longitude);
-    getAddress(coords.latitude, coords.longitude, updateMarkerMessage);
+    useGeocoder(coords.latitude, coords.longitude, updateMarkerMessage);
   });
 }
 
