@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, ref, watch } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
 import KMapSearcher from "@/components/map/KMapSearcher.vue";
@@ -19,13 +19,20 @@ const center = ref({
   longitude: 126.99421849699539,
 });
 
-function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  markerLatLng.value = e.latLng;
-
+watch(markerLatLng, (newLatLng) => {
+  if (!newLatLng) return;
+  if ("latitude" in newLatLng) {
+    newLatLng = new kakao.maps.LatLng(newLatLng.latitude, newLatLng.longitude);
+  }
   const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.coord2Address(e.latLng.getLng(), e.latLng.getLat(), (result) => {
+  geocoder.coord2Address(newLatLng.getLng(), newLatLng.getLat(), (result) => {
     address.value = result[0].road_address;
   });
+});
+
+function mapClickEvent(e: kakao.maps.event.MouseEvent) {
+  markerLatLng.value = e.latLng;
+  center.value = { latitude: e.latLng.getLat(), longitude: e.latLng.getLng() };
 }
 
 function apple() {
