@@ -5,7 +5,10 @@ import KMapMarker from "@/components/map/KMapMarker.vue";
 import KMapSearcher from "@/components/map/KMapSearcher.vue";
 import AIcons from "@/components/AIcons.vue";
 /* global kakao */
-
+interface LatLng {
+  latitude: number;
+  longitude: number;
+}
 defineProps<{
   modelValue: boolean;
 }>();
@@ -13,8 +16,8 @@ defineProps<{
 const emit = defineEmits(["update:modelValue", "location"]);
 
 const markerMessage = ref("");
-const markerLatLng = ref<{ latitude: number; longitude: number } | null>(null);
-const center = ref({
+const markerLatLng = ref<LatLng | null>(null);
+const center = ref<LatLng>({
   latitude: 37.53401162895581,
   longitude: 126.99421849699539,
 });
@@ -39,13 +42,7 @@ function callback(addr: {
   markerMessage.value = p1 ?? p2 ?? p3;
 }
 
-function updateMessage({
-  latitude,
-  longitude,
-}: {
-  latitude: number;
-  longitude: number;
-}) {
+function updateMessage({ latitude, longitude }: LatLng) {
   useGeocoder(latitude, longitude, callback);
 }
 
@@ -93,7 +90,7 @@ function here() {
   });
 }
 
-function aLatLng(lat: number | string, lng: number | string) {
+function aLatLng(lat: number | string, lng: number | string): LatLng {
   return { latitude: Number(lat), longitude: Number(lng) };
 }
 
