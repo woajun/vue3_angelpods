@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref } from "vue";
+import { defineProps, reactive, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
 import KMapSearcher from "@/components/map/KMapSearcher.vue";
@@ -10,7 +10,13 @@ defineProps<{
 }>();
 
 const address = ref<kakao.maps.services.RoadAaddress | null>(null);
-const markerLatLng = ref<kakao.maps.LatLng | null>(null);
+const markerLatLng = ref<
+  kakao.maps.LatLng | null | { latitude: number; longitude: number }
+>(null);
+const center = ref({
+  latitude: 37.53401162895581,
+  longitude: 126.99421849699539,
+});
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = e.latLng;
@@ -23,6 +29,12 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
 
 function apple() {
   console.log("aaaaaaa");
+}
+
+function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
+  const itemLatLng = { latitude: Number(item.y), longitude: Number(item.x) };
+  center.value = itemLatLng;
+  markerLatLng.value = itemLatLng;
 }
 </script>
 <template>
@@ -39,8 +51,10 @@ function apple() {
           ></button>
         </div>
         <div class="modal-body">
-          <KMap @click="mapClickEvent" v-slot="map">
-            <KMapSearcher :map="map.map"> hello </KMapSearcher>
+          <KMap :center="center" @click="mapClickEvent" v-slot="map">
+            <KMapSearcher :map="map.map" @item-click="itemClick">
+              hello
+            </KMapSearcher>
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>

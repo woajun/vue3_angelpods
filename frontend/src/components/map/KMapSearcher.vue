@@ -46,12 +46,6 @@ function placesSearchCB(
   console.log(data);
   result.value = data;
 }
-
-function panTo(x: string, y: string) {
-  const latlng = new window.kakao.maps.LatLng(Number(y), Number(x));
-  props.map?.setLevel(3);
-  props.map?.panTo(latlng);
-}
 </script>
 <template>
   <div id="menu_wrap" class="bg_white">
@@ -76,7 +70,7 @@ function panTo(x: string, y: string) {
         <div>
           <ul>
             <li v-for="(item, i) in result" :key="i">
-              <div class="info" @click="panTo(item.x, item.y)">
+              <div class="info" @click="$emit('itemClick', item)">
                 <h5>{{ item.place_name }}</h5>
                 <template v-if="item.road_address_name">
                   <span>{{ item.road_address_name }}</span>

@@ -1,20 +1,38 @@
 <script setup lang="ts">
-import { onMounted, ref, withDefaults, defineProps, defineEmits } from "vue";
+import {
+  onMounted,
+  ref,
+  withDefaults,
+  defineProps,
+  defineEmits,
+  watch,
+} from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();
 const map = ref<kakao.maps.Map | null>(null);
 
 interface Props {
-  options?: kakao.maps.MapOptions;
+  center: { latitude: number; longitude: number };
 }
 
 const props = withDefaults(defineProps<Props>(), {});
 const emit = defineEmits(["click"]);
 
+watch(
+  () => props.center,
+  ({ latitude, longitude }) => {
+    console.log("h");
+    map.value?.setCenter(new window.kakao.maps.LatLng(latitude, longitude));
+  }
+);
+
 function createMap() {
   if (!container.value) return;
   map.value = new window.kakao.maps.Map(container.value, {
-    center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+    center: new window.kakao.maps.LatLng(
+      props.center.latitude,
+      props.center.longitude
+    ),
     level: 3,
   });
   kakao.maps.event.addListener(

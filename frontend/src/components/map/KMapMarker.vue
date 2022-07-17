@@ -3,7 +3,7 @@ import { defineProps, watch, ref } from "vue";
 /* global kakao */
 interface Props {
   map: kakao.maps.Map | null;
-  position: kakao.maps.LatLng | null;
+  position: kakao.maps.LatLng | null | { latitude: number; longitude: number };
 }
 const props = defineProps<Props>();
 const marker = ref<kakao.maps.Marker | null>(null);
@@ -24,6 +24,9 @@ watch(
   () => props.position,
   (latlng) => {
     if (!props.map || !latlng || !marker.value) return;
+    if (!(latlng instanceof kakao.maps.LatLng)) {
+      latlng = new window.kakao.maps.LatLng(latlng.latitude, latlng.longitude);
+    }
     marker.value.setPosition(latlng);
     marker.value.setMap(props.map);
 
