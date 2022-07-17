@@ -17,19 +17,17 @@ const center = ref({
   longitude: 126.99421849699539,
 });
 
-watch(markerLatLng, (newLatLng) => {
-  if (!newLatLng) return;
-  const { latitude, longitude } = newLatLng;
+watch(markerLatLng, (latlng) => {
+  if (!latlng) return;
+  center.value = latlng;
   const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.coord2Address(longitude, latitude, (r) => {
+  geocoder.coord2Address(latlng.longitude, latlng.latitude, (r) => {
     address.value = r[0].road_address;
   });
 });
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  const latlng = aLatLng(e.latLng.getLat(), e.latLng.getLng());
-  markerLatLng.value = latlng;
-  center.value = latlng;
+  markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
 }
 
 function apple() {
@@ -37,15 +35,12 @@ function apple() {
 }
 
 function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
-  center.value = aLatLng(item.y, item.x);
   markerLatLng.value = aLatLng(item.y, item.x);
 }
 
 function here() {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
-    const latlng = aLatLng(coords.latitude, coords.longitude);
-    center.value = latlng;
-    markerLatLng.value = latlng;
+    markerLatLng.value = aLatLng(coords.latitude, coords.longitude);
   });
 }
 
@@ -55,7 +50,6 @@ function aLatLng(lat: number | string, lng: number | string) {
 
 function searchResult(data: kakao.maps.services.PlacesSearchResult) {
   if (!data[0]) return;
-  center.value = aLatLng(data[0].y, data[0].x);
   markerLatLng.value = aLatLng(data[0].y, data[0].x);
 }
 </script>
