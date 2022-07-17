@@ -11,9 +11,7 @@ defineProps<{
 }>();
 
 const address = ref<kakao.maps.services.RoadAaddress | null>(null);
-const markerLatLng = ref<
-  kakao.maps.LatLng | null | { latitude: number; longitude: number }
->(null);
+const markerLatLng = ref<{ latitude: number; longitude: number } | null>(null);
 const center = ref({
   latitude: 37.53401162895581,
   longitude: 126.99421849699539,
@@ -21,18 +19,17 @@ const center = ref({
 
 watch(markerLatLng, (newLatLng) => {
   if (!newLatLng) return;
-  if ("latitude" in newLatLng) {
-    newLatLng = new kakao.maps.LatLng(newLatLng.latitude, newLatLng.longitude);
-  }
+  const { latitude, longitude } = newLatLng;
   const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.coord2Address(newLatLng.getLng(), newLatLng.getLat(), (result) => {
-    address.value = result[0].road_address;
+  geocoder.coord2Address(longitude, latitude, (r) => {
+    address.value = r[0].road_address;
   });
 });
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  markerLatLng.value = e.latLng;
-  center.value = { latitude: e.latLng.getLat(), longitude: e.latLng.getLng() };
+  const latlng = { latitude: e.latLng.getLat(), longitude: e.latLng.getLng() };
+  markerLatLng.value = latlng;
+  center.value = latlng;
 }
 
 function apple() {

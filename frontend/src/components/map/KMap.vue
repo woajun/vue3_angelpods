@@ -21,7 +21,6 @@ const emit = defineEmits(["click"]);
 watch(
   () => props.center,
   ({ latitude, longitude }) => {
-    console.log("h");
     map.value?.setCenter(new window.kakao.maps.LatLng(latitude, longitude));
   }
 );
