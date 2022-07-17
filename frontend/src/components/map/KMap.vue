@@ -6,6 +6,7 @@ import {
   defineProps,
   defineEmits,
   watch,
+  StyleValue,
 } from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();
@@ -13,6 +14,7 @@ const map = ref<kakao.maps.Map | null>(null);
 
 interface Props {
   center: { latitude: number; longitude: number };
+  style?: StyleValue;
 }
 
 const props = withDefaults(defineProps<Props>(), {});
@@ -52,7 +54,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div id="map" ref="container" />
+  <div id="map" ref="container" :style="props.style" />
   <slot :map="map"></slot>
 </template>
 <style>

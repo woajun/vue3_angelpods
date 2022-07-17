@@ -3,8 +3,10 @@ import TopNav from "@/components/navs/TopNav.vue";
 import AIcons from "@/components/AIcons.vue";
 import MapModal from "./modal/ItemRegistMapModal.vue";
 import { ref, reactive } from "vue";
+import KMap from "@/components/map/KMap.vue";
 
 const modalShow = ref(false);
+const center = ref<{ latitude: number; longitude: number } | null>(null);
 const data = reactive<{
   latitude: number | null;
   longitude: number | null;
@@ -23,6 +25,7 @@ function setLocation(location: {
   data.latitude = location.latitude;
   data.longitude = location.longitude;
   data.location = location.address;
+  center.value = { latitude: location.latitude, longitude: location.longitude };
 }
 </script>
 <template>
@@ -92,6 +95,9 @@ function setLocation(location: {
                 />
               </div>
             </div>
+            <template v-if="center">
+              <KMap :center="center" :style="{ height: '200px' }"></KMap>
+            </template>
 
             <div class="col-12 mt-3">
               <label class="fw-bold">위치</label>
