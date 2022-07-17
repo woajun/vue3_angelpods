@@ -10,7 +10,7 @@ defineProps<{
   modelValue: boolean;
 }>();
 
-const address = ref<kakao.maps.services.RoadAaddress | null>(null);
+const markerMessage = ref("");
 const markerLatLng = ref<{ latitude: number; longitude: number } | null>(null);
 const center = ref({
   latitude: 37.53401162895581,
@@ -20,10 +20,22 @@ const center = ref({
 watch(markerLatLng, (latlng) => {
   if (!latlng) return;
   center.value = latlng;
-  getAddress(latlng.latitude, latlng.longitude, (address) => {
-    console.log("address", address);
-  });
+  getAddress(latlng.latitude, latlng.longitude, updateMarkerMessage);
 });
+
+function updateMarkerMessage(addr: {
+  address: kakao.maps.services.Address;
+  road_address: kakao.maps.services.RoadAaddress | null;
+}) {
+  function checkEmpty(str: string | undefined) {
+    if (str && str.length !== 0) return str;
+    return undefined;
+  }
+  const p1 = checkEmpty(addr.road_address?.building_name);
+  const p2 = checkEmpty(addr.road_address?.address_name);
+  const p3 = addr.address.address_name;
+  markerMessage.value = p1 ?? p2 ?? p3;
+}
 
 function getAddress(
   lat: number,
@@ -85,7 +97,7 @@ function searchResult(data: kakao.maps.services.PlacesSearchResult) {
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
-                <div class="info pb-0">{{ address?.address_name }}</div>
+                <div class="info pb-0">{{ markerMessage }}</div>
                 <div class="text-center">
                   <button type="button" class="btn btn-dark" @click="apple">
                     입력
@@ -114,6 +126,7 @@ function searchResult(data: kakao.maps.services.PlacesSearchResult) {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  background-color: white;
 }
 
 /* ------------------------------------------- */
@@ -129,13 +142,6 @@ function searchResult(data: kakao.maps.services.PlacesSearchResult) {
 }
 .modal-body {
   height: 80vh;
-}
-
-.bAddr {
-  padding: 5px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 }
 .curBtn {
   position: absolute;
