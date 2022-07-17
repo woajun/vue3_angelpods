@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { defineProps, reactive, ref } from "vue";
+import { defineProps, ref } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
 import KMapSearcher from "@/components/map/KMapSearcher.vue";
+import AIcons from "@/components/AIcons.vue";
 /* global kakao */
 
 defineProps<{
@@ -36,6 +37,14 @@ function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
   center.value = itemLatLng;
   markerLatLng.value = itemLatLng;
 }
+
+function here() {
+  navigator.geolocation.getCurrentPosition(({ coords }) => {
+    const latlng = { latitude: coords.latitude, longitude: coords.longitude };
+    center.value = latlng;
+    markerLatLng.value = latlng;
+  });
+}
 </script>
 <template>
   <!-- Modal -->
@@ -52,9 +61,7 @@ function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
         </div>
         <div class="modal-body">
           <KMap :center="center" @click="mapClickEvent" v-slot="map">
-            <KMapSearcher :map="map.map" @item-click="itemClick">
-              hello
-            </KMapSearcher>
+            <KMapSearcher :map="map.map" @item-click="itemClick" />
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
@@ -66,6 +73,12 @@ function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
                 </div>
               </div>
             </KMapMarker>
+            <div class="curBtn text-end">
+              <button type="button" class="btn btn-dark" @click="here">
+                현위치
+                <AIcons type="location" />
+              </button>
+            </div>
           </KMap>
         </div>
       </div>
