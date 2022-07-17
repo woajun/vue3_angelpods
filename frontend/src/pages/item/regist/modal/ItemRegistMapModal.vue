@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from "vue";
+import { defineProps, defineEmits, ref, watch } from "vue";
 import KMap from "@/components/map/KMap.vue";
 import KMapMarker from "@/components/map/KMapMarker.vue";
 import KMapSearcher from "@/components/map/KMapSearcher.vue";
@@ -9,6 +9,8 @@ import AIcons from "@/components/AIcons.vue";
 defineProps<{
   modelValue: boolean;
 }>();
+
+const emit = defineEmits(["update:modelValue", "location"]);
 
 const markerMessage = ref("");
 const markerLatLng = ref<{ latitude: number; longitude: number } | null>(null);
@@ -55,8 +57,15 @@ function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
 }
 
-function apple() {
-  console.log("aaaaaaa");
+function submit() {
+  if (!markerLatLng.value) return alert("습득 장소를  선택해주세요.");
+  const location = {
+    latitude: markerLatLng.value.latitude,
+    longitude: markerLatLng.value.longitude,
+    address: markerMessage.value,
+  };
+  emit("location", location);
+  emit("update:modelValue", false);
 }
 
 function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
@@ -99,7 +108,7 @@ function searchResult(data: kakao.maps.services.PlacesSearchResult) {
                 <span>습득한 곳이 이곳인가요?</span>
                 <div class="info pb-0">{{ markerMessage }}</div>
                 <div class="text-center">
-                  <button type="button" class="btn btn-dark" @click="apple">
+                  <button type="button" class="btn btn-dark" @click="submit">
                     입력
                   </button>
                 </div>

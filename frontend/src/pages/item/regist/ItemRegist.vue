@@ -5,6 +5,14 @@ import MapModal from "./modal/ItemRegistMapModal.vue";
 import { ref } from "vue";
 
 const modalShow = ref(false);
+
+function setLocation(location: {
+  latitude: number;
+  longitude: number;
+  address: string;
+}) {
+  console.log(location);
+}
 </script>
 <template>
   <!-- nav -->
@@ -92,7 +100,7 @@ const modalShow = ref(false);
               </button>
             </div>
 
-            <MapModal v-model="modalShow" />
+            <MapModal v-model="modalShow" @location="setLocation" />
 
             <div class="col-12 mt-1">
               <input
