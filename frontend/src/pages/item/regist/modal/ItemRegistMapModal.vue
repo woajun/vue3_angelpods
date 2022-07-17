@@ -20,11 +20,24 @@ const center = ref({
 watch(markerLatLng, (latlng) => {
   if (!latlng) return;
   center.value = latlng;
-  const geocoder = new window.kakao.maps.services.Geocoder();
-  geocoder.coord2Address(latlng.longitude, latlng.latitude, (r) => {
-    address.value = r[0].road_address;
+  getAddress(latlng.latitude, latlng.longitude, (address) => {
+    console.log("address", address);
   });
 });
+
+function getAddress(
+  lat: number,
+  lng: number,
+  callback: (address: {
+    address: kakao.maps.services.Address;
+    road_address: kakao.maps.services.RoadAaddress | null;
+  }) => void
+) {
+  const geocoder = new window.kakao.maps.services.Geocoder();
+  geocoder.coord2Address(lng, lat, (r) => {
+    callback(r[0]);
+  });
+}
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
   markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
