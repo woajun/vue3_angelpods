@@ -4,6 +4,7 @@ import AIcons from "@/components/AIcons.vue";
 import MapModal from "./modal/ItemRegistMapModal.vue";
 import { ref, reactive } from "vue";
 import KMap from "@/components/map/KMap.vue";
+import KMapMarker from "@/components/map/KMapMarker.vue";
 
 const modalShow = ref(false);
 const center = ref<{ latitude: number; longitude: number } | null>(null);
@@ -95,9 +96,6 @@ function setLocation(location: {
                 />
               </div>
             </div>
-            <template v-if="center">
-              <KMap :center="center" :style="{ height: '200px' }"></KMap>
-            </template>
 
             <div class="col-12 mt-3">
               <label class="fw-bold">위치</label>
@@ -116,6 +114,17 @@ function setLocation(location: {
                 </div>
               </button>
             </div>
+
+            <template v-if="center">
+              <div class="mt-1">
+                <KMap
+                  :center="center"
+                  :style="{ height: '200px' }"
+                  :lock="true"
+                >
+                </KMap>
+              </div>
+            </template>
 
             <MapModal v-model="modalShow" @location="setLocation" />
 

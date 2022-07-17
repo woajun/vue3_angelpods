@@ -15,6 +15,7 @@ const map = ref<kakao.maps.Map | null>(null);
 interface Props {
   center: { latitude: number; longitude: number };
   style?: StyleValue;
+  lock?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {});
@@ -29,7 +30,7 @@ watch(
 
 function createMap() {
   if (!container.value) return;
-  map.value = new window.kakao.maps.Map(container.value, {
+  const aMap = new window.kakao.maps.Map(container.value, {
     center: new window.kakao.maps.LatLng(
       props.center.latitude,
       props.center.longitude
@@ -37,10 +38,17 @@ function createMap() {
     level: 3,
   });
   kakao.maps.event.addListener(
-    map.value,
+    aMap,
     "click",
     (e: kakao.maps.event.MouseEvent) => emit("click", e)
   );
+  if (props.lock) {
+    aMap.setDraggable(false);
+    aMap.setZoomable(false);
+    aMap.setKeyboardShortcuts(false);
+    aMap.setLevel(1);
+  }
+  map.value = aMap;
 }
 
 const resizeObserver = new ResizeObserver(() => {
