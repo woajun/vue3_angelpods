@@ -1,10 +1,10 @@
 export default [
   {
     path: "/",
-    component: () => import("../pages/find/FindList.vue"),
+    component: () => import("../pages/item/list/ItemList.vue"),
   },
   {
-    path: "/find/create",
-    component: () => import("../pages/find/ChoiceLocation.vue"),
+    path: "/regist",
+    component: () => import("../pages/item/regist/ItemRegist.vue"),
   },
 ];

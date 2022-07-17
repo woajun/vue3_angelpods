@@ -265,7 +265,7 @@ function routerPush(path: string) {
     <button
       id="btn_write"
       type="button"
-      @click="routerPush('/find/create')"
+      @click="routerPush('/regist')"
       class="btn btn-primary btn-xl"
       style="position: fixed; right: 4vh"
     >

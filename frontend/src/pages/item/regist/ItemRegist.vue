@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import TopNav from "@/components/navs/TopNav.vue";
 import AIcons from "@/components/AIcons.vue";
-import ChoiceLocationModal from "./ChoiceLocationModal.vue";
+import MapModal from "./modal/ItemRegistMapModal.vue";
 import { ref } from "vue";
 
 const modalShow = ref(false);
@@ -92,7 +92,7 @@ const modalShow = ref(false);
               </button>
             </div>
 
-            <ChoiceLocationModal v-model="modalShow" />
+            <MapModal v-model="modalShow" />
 
             <div class="col-12 mt-1">
               <input
