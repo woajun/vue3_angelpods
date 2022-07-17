@@ -65,7 +65,7 @@ function here() {
         </div>
         <div class="modal-body">
           <KMap :center="center" @click="mapClickEvent" v-slot="map">
-            <KMapSearcher :map="map.map" @item-click="itemClick" />
+            <KMapSearcher @item-click="itemClick" />
             <KMapMarker :map="map.map" :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>

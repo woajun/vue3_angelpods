@@ -1,25 +1,11 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import { ref, defineProps, watch } from "vue";
+import { ref, onMounted } from "vue";
 /* global kakao */
 
-interface Props {
-  map: kakao.maps.Map | null;
-}
-
-const props = defineProps<Props>();
-
-const keyword = ref("이태원 맛집");
+const keyword = ref("");
 const result = ref<kakao.maps.services.PlacesSearchResult>([]);
 const placeService = ref<kakao.maps.services.Places | null>(null);
-watch(
-  () => props.map,
-  (newMap) => {
-    if (!newMap) return;
-    placeService.value = new window.kakao.maps.services.Places();
-    searchPlaces();
-  }
-);
 function searchPlaces() {
   if (!placeService.value) return;
   if (!keyword.value.replace(/^\s+|\s+$/g, ""))
@@ -40,6 +26,12 @@ function placesSearchCB(
   console.log(data);
   result.value = data;
 }
+
+onMounted(() => {
+  kakao.maps.load(() => {
+    placeService.value = new window.kakao.maps.services.Places();
+  });
+});
 </script>
 <template>
   <div id="menu_wrap" class="bg_white">
