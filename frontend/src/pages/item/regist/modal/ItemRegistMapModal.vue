@@ -24,18 +24,29 @@ watch(markerLatLng, (latlng) => {
   center.value = latlng;
 });
 
-function updateMarkerMessage(addr: {
+function checkEmpty(str: string | undefined) {
+  if (str && str.length !== 0) return str;
+  return undefined;
+}
+
+function callback(addr: {
   address: kakao.maps.services.Address;
   road_address: kakao.maps.services.RoadAaddress | null;
 }) {
-  function checkEmpty(str: string | undefined) {
-    if (str && str.length !== 0) return str;
-    return undefined;
-  }
   const p1 = checkEmpty(addr.road_address?.building_name);
   const p2 = checkEmpty(addr.road_address?.address_name);
   const p3 = addr.address.address_name;
   markerMessage.value = p1 ?? p2 ?? p3;
+}
+
+function updateMessage({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}) {
+  useGeocoder(latitude, longitude, callback);
 }
 
 function useGeocoder(
@@ -53,8 +64,9 @@ function useGeocoder(
 }
 
 function mapClickEvent(e: kakao.maps.event.MouseEvent) {
-  markerLatLng.value = aLatLng(e.latLng.getLat(), e.latLng.getLng());
-  useGeocoder(e.latLng.getLat(), e.latLng.getLng(), updateMarkerMessage);
+  const latlng = aLatLng(e.latLng.getLat(), e.latLng.getLng());
+  markerLatLng.value = latlng;
+  updateMessage(latlng);
 }
 
 function submit() {
@@ -75,8 +87,9 @@ function itemClick(item: kakao.maps.services.PlacesSearchResultItem) {
 
 function here() {
   navigator.geolocation.getCurrentPosition(({ coords }) => {
-    markerLatLng.value = aLatLng(coords.latitude, coords.longitude);
-    useGeocoder(coords.latitude, coords.longitude, updateMarkerMessage);
+    const latlng = aLatLng(coords.latitude, coords.longitude);
+    markerLatLng.value = latlng;
+    updateMessage(latlng);
   });
 }
 
