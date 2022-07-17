@@ -2,16 +2,27 @@
 import TopNav from "@/components/navs/TopNav.vue";
 import AIcons from "@/components/AIcons.vue";
 import MapModal from "./modal/ItemRegistMapModal.vue";
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 
 const modalShow = ref(false);
+const data = reactive<{
+  latitude: number | null;
+  longitude: number | null;
+  location: string;
+}>({
+  latitude: null,
+  longitude: null,
+  location: "",
+});
 
 function setLocation(location: {
   latitude: number;
   longitude: number;
   address: string;
 }) {
-  console.log(location);
+  data.latitude = location.latitude;
+  data.longitude = location.longitude;
+  data.location = location.address;
 }
 </script>
 <template>
@@ -83,7 +94,7 @@ function setLocation(location: {
             </div>
 
             <div class="col-12 mt-3">
-              <label class="fw-bold">위치{{ modalShow }}</label>
+              <label class="fw-bold">위치</label>
               <button
                 type="button"
                 class="form-control form-control-hover"
@@ -91,7 +102,7 @@ function setLocation(location: {
               >
                 <div class="row justify-content-between">
                   <div class="col-8 text-start">
-                    <span id="sidoGueDong"> 습득 장소를 선택하세요. </span>
+                    <span> 습득 장소를 선택하세요. </span>
                   </div>
                   <div class="col-4 text-end">
                     <AIcons type="arrow-light-square" />
@@ -104,12 +115,10 @@ function setLocation(location: {
 
             <div class="col-12 mt-1">
               <input
-                id="addrDetail"
+                v-model="data.location"
                 type="text"
-                name="addrDetail"
                 class="form-control"
                 placeholder="상세장소"
-                value="${param.addrDetail}"
                 required
               />
             </div>
@@ -143,6 +152,7 @@ function setLocation(location: {
                     onclick="imgAddName()"
                   />
                 </div>
+                {{ data }}
               </div>
             </div>
           </div>
