@@ -7,10 +7,12 @@ import {
   defineEmits,
   watch,
   StyleValue,
+  provide,
 } from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();
 const map = ref<kakao.maps.Map | null>(null);
+provide("kMap", map);
 
 interface Props {
   center: { latitude: number; longitude: number };

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, watch, ref } from "vue";
+import { defineProps, watch, ref, inject } from "vue";
 /* global kakao */
 interface Props {
   map: kakao.maps.Map | null;
@@ -9,6 +9,7 @@ const props = defineProps<Props>();
 const marker = ref<kakao.maps.Marker | null>(null);
 const contents = ref<HTMLElement | null>(null);
 const infoWindow = ref<kakao.maps.InfoWindow | null>(null);
+const kMap = inject("kMap");
 
 watch(
   () => props.map,
@@ -23,6 +24,7 @@ watch(
 watch(
   () => props.position,
   (latlng) => {
+    console.log(kMap.value);
     if (!props.map || !latlng || !marker.value) return;
     const position = new window.kakao.maps.LatLng(
       latlng.latitude,
