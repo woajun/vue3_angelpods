@@ -8,6 +8,7 @@ import {
   watch,
   StyleValue,
   provide,
+  readonly,
 } from "vue";
 /* global kakao */
 const container = ref<HTMLElement>();

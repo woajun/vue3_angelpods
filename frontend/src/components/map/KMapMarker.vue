@@ -1,39 +1,37 @@
 <script setup lang="ts">
-import { defineProps, watch, ref, inject } from "vue";
+import { defineProps, watch, ref, inject, Ref } from "vue";
 /* global kakao */
 interface Props {
-  map: kakao.maps.Map | null;
   position: { latitude: number; longitude: number } | null;
 }
 const props = defineProps<Props>();
 const marker = ref<kakao.maps.Marker | null>(null);
 const contents = ref<HTMLElement | null>(null);
 const infoWindow = ref<kakao.maps.InfoWindow | null>(null);
-const kMap = inject("kMap");
+const map = inject<Ref<kakao.maps.Map | null>>("kMap", ref(null));
 
 watch(
-  () => props.map,
-  (newMap) => {
-    if (!newMap) return;
-    marker.value = createMarker(newMap);
+  () => map.value,
+  (map) => {
+    if (!map) return;
+    marker.value = createMarker(map);
+    marker.value.setMap(map);
     if (!contents.value) return;
-    infoWindow.value = createInfoWindow(newMap, contents.value);
+    infoWindow.value = createInfoWindow(map, contents.value);
   }
 );
 
 watch(
   () => props.position,
   (latlng) => {
-    console.log(kMap.value);
-    if (!props.map || !latlng || !marker.value) return;
+    if (!latlng || !marker.value) return;
     const position = new window.kakao.maps.LatLng(
       latlng.latitude,
       latlng.longitude
     );
     marker.value.setPosition(position);
-    marker.value.setMap(props.map);
-
-    if (infoWindow.value) infoWindow.value.open(props.map, marker.value);
+    if (infoWindow.value && map?.value)
+      infoWindow.value.open(map.value, marker.value);
   }
 );
 

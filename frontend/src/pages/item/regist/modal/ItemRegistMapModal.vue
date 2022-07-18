@@ -112,9 +112,9 @@ function searchResult(data: kakao.maps.services.PlacesSearchResult) {
           ></button>
         </div>
         <div class="modal-body">
-          <KMap :center="center" @click="mapClickEvent" v-slot="map">
+          <KMap :center="center" @click="mapClickEvent">
             <KMapSearcher @item-click="itemClick" @result="searchResult" />
-            <KMapMarker :map="map.map" :position="markerLatLng">
+            <KMapMarker :position="markerLatLng">
               <div class="bAddr" style="font-size: 15px">
                 <span>습득한 곳이 이곳인가요?</span>
                 <div class="info pb-0">{{ markerMessage }}</div>
