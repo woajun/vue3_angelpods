@@ -16,7 +16,7 @@ watch(
     if (!map) return;
     marker.value = createMarker(map);
     marker.value.setMap(map);
-    if (!contents.value) return;
+    if (!contents.value || contents.value.innerHTML.length === 0) return;
     infoWindow.value = createInfoWindow(map, contents.value);
   }
 );

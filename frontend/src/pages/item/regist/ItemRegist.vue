@@ -122,6 +122,7 @@ function setLocation(location: {
                   :style="{ height: '200px' }"
                   :lock="true"
                 >
+                  <KMapMarker :position="center" />
                 </KMap>
               </div>
             </template>
