@@ -18,45 +18,50 @@ function routerPush(path: string) {
 const center = ref({ latitude: 37.566826, longitude: 126.9786567 });
 </script>
 <template>
-  <div>
+  <div style="display: flex">
     <!-- 게시판 -->
     <ItemListBoard />
-    <!--지도-->
-    <KMap
-      :center="center"
-      :style="{
-        height: '100vh',
-        position: 'fixed',
-        'padding-left': '480px',
-      }"
-    >
-      <KMapMarker :position="center"></KMapMarker>
-
-      <!-- 현위치 버튼 -->
-      <button
-        id="curPositionBtn"
-        type="button"
-        class="btn btn-primary"
-        onclick="curPositionBtn()"
+    <div>
+      <!--지도-->
+      <KMap
+        :center="center"
+        :style="{
+          height: '100vh',
+          position: 'fixed',
+          'padding-left': '480px',
+        }"
       >
-        현위치
-        <AIcons type="location" />
-      </button>
+        <KMapMarker :position="center"></KMapMarker>
 
-      <!-- 글쓰기 버튼 -->
-      <button
-        id="btn_write"
-        type="button"
-        @click="routerPush('/regist')"
-        class="btn btn-primary btn-xl"
-        style="position: fixed; right: 4vh"
-      >
-        글쓰기
-      </button>
-    </KMap>
+        <!-- 현위치 버튼 -->
+        <button
+          id="curPositionBtn"
+          type="button"
+          class="btn btn-primary"
+          onclick="curPositionBtn()"
+        >
+          현위치
+          <AIcons type="location" />
+        </button>
+
+        <!-- 글쓰기 버튼 -->
+        <button
+          id="btn_write"
+          type="button"
+          @click="routerPush('/regist')"
+          class="btn btn-primary btn-xl"
+          style="position: fixed; right: 4vh"
+        >
+          글쓰기
+        </button>
+      </KMap>
+    </div>
   </div>
 </template>
 <style scoped>
+.left-board {
+  width: 400px;
+}
 #curPositionBtn {
   position: fixed;
   right: 4vh;
