@@ -28,6 +28,28 @@ const center = ref({ latitude: 37.566826, longitude: 126.9786567 });
       }"
     >
       <KMapMarker :position="center"></KMapMarker>
+
+      <!-- 현위치 버튼 -->
+      <button
+        id="curPositionBtn"
+        type="button"
+        class="btn btn-primary"
+        onclick="curPositionBtn()"
+      >
+        현위치
+        <AIcons type="location" />
+      </button>
+
+      <!-- 글쓰기 버튼 -->
+      <button
+        id="btn_write"
+        type="button"
+        @click="routerPush('/regist')"
+        class="btn btn-primary btn-xl"
+        style="position: fixed; right: 4vh"
+      >
+        글쓰기
+      </button>
     </KMap>
     <!-- 게시판 -->
     <div id="layoutSidenav">
@@ -261,28 +283,6 @@ const center = ref({ latitude: 37.566826, longitude: 126.9786567 });
         </div>
       </div>
     </div>
-
-    <!-- 현위치 버튼 -->
-    <button
-      id="curPositionBtn"
-      type="button"
-      class="btn btn-primary"
-      onclick="curPositionBtn()"
-    >
-      현위치
-      <AIcons type="location" />
-    </button>
-
-    <!-- 글쓰기 버튼 -->
-    <button
-      id="btn_write"
-      type="button"
-      @click="routerPush('/regist')"
-      class="btn btn-primary btn-xl"
-      style="position: fixed; right: 4vh"
-    >
-      글쓰기
-    </button>
   </div>
 </template>
 <style scoped>
