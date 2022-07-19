@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
-import KakaoMap from "@/components/map/KakaoMap.vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
 import { useRouter } from "vue-router";
+import KMap from "@/components/map/KMap.vue";
 
 const router = useRouter();
 
@@ -15,7 +15,14 @@ function routerPush(path: string) {
 <template>
   <div>
     <!--지도-->
-    <KakaoMap :center="{ latitude: 37.566826, longitude: 126.9786567 }" />
+    <KMap
+      :center="{ latitude: 37.566826, longitude: 126.9786567 }"
+      :style="{
+        height: '100vh',
+        position: 'fixed',
+        'padding-left': '480px',
+      }"
+    />
     <MapSearcher />
     <!-- 게시판 -->
     <div id="layoutSidenav">
@@ -273,18 +280,11 @@ function routerPush(path: string) {
     </button>
   </div>
 </template>
-<style>
+<style scoped>
 #curPositionBtn {
   position: fixed;
   right: 4vh;
   top: 80px;
-}
-
-#map {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  padding-left: 480px;
 }
 
 #layoutSidenav {

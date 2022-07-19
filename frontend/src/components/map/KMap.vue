@@ -67,7 +67,7 @@ onMounted(() => {
   <div id="map" ref="container" :style="props.style" />
   <slot :map="map"></slot>
 </template>
-<style>
+<style scoped>
 #map {
   height: 100%;
   width: 100%;
