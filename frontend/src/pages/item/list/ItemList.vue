@@ -3,6 +3,8 @@ import AIcons from "@/components/AIcons.vue";
 import MapSearcher from "@/components/map/MapSearcher.vue";
 import { useRouter } from "vue-router";
 import KMap from "@/components/map/KMap.vue";
+import KMapMarker from "@/components/map/KMapMarker.vue";
+import { ref } from "vue";
 
 const router = useRouter();
 
@@ -11,19 +13,22 @@ function routerPush(path: string) {
     path,
   });
 }
+
+const center = ref({ latitude: 37.566826, longitude: 126.9786567 });
 </script>
 <template>
   <div>
     <!--지도-->
     <KMap
-      :center="{ latitude: 37.566826, longitude: 126.9786567 }"
+      :center="center"
       :style="{
         height: '100vh',
         position: 'fixed',
         'padding-left': '480px',
       }"
-    />
-    <MapSearcher />
+    >
+      <KMapMarker :position="center"></KMapMarker>
+    </KMap>
     <!-- 게시판 -->
     <div id="layoutSidenav">
       <div id="layoutSidenav_nav" class="bg-light">
