@@ -1,7 +1,7 @@
 export default [
   {
     path: "/",
-    component: () => import("../pages/item/list/ItemList.vue"),
+    component: () => import("../pages/item/list/MainBoard.vue"),
   },
   {
     path: "/regist",

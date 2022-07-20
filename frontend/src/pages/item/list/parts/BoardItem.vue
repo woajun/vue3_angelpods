@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import type { Item } from "../ItemListBoard.vue";
+import type { Item } from "../MainBoard.vue";
 
 interface Props {
   item: Item;

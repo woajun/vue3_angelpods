@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AIcons from "@/components/AIcons.vue";
+</script>
 <template>
   <form name="searchForm" action="f_search.do" method="post">
     <div class="row">
