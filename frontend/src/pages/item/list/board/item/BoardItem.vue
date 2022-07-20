@@ -35,3 +35,16 @@
     </div>
   </div>
 </template>
+<style scoped>
+.overflow {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 250px;
+}
+
+.boardItem .btn-outline-secondary {
+  font-size: 0.775rem;
+}
+</style>
