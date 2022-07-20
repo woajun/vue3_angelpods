@@ -1,3 +1,6 @@
+<script lang="ts" setup>
+import BoardItem from "./item/BoardItem.vue";
+</script>
 <template>
   <div id="layoutSidenav">
     <div id="layoutSidenav_nav" class="bg-light">
@@ -177,47 +180,7 @@
         <div style="position: relative; bottom: 0">
           <div id="board">
             <div class="scrollarea">
-              <!-- <c:forEach items="${list}" var="dto"> -->
-              <!-- <div class="boardItem list-group-item list-group-item-action py-1 mb-1">
-                    <div class="row">
-                      <div class="col-3 align-items-center d-flex px-1">
-                        <img  class="rounded"  src="${pageContext.request.contextPath}/images/findBoard/${dto.thumbnailImage}" alt="..." width=80px height=80px/>
-                      </div>
-                      <div class="col-9 ps-2">
-                          <div class="d-flex align-items-center justify-content-between">
-                            <small class="text-muted overflow" style="width: 160px; height: 20px;">
-                              ${dto.cName}<span> &#183; </span>${dto.cdName} </small><br/>
-                            <small class="date text-muted"></small>
-                          </div>
-                          <strong class=" overflow" style="width: 240px; height: 20px;">${dto.title}</strong>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <small class="text-muted">${dto.gue} ${dto.dong} </small><br/>
-                          </div>
-                          <small class="overflow" style="width: 240px;height: 20px;">${dto.addrDetail}</small>
-                          <div class="d-flex align-items-center justify-content-between my-1">
-                            <small class="text-muted">채팅 ${dto.chatHit}</small>
-                            <button class="btn btn-sm btn-outline-secondary me-1" onclick="location.href='f_content_view.do?fbNum=${dto.fbNum}'" style="line-height:1;"> 게시물보기 </button>
-                          </div>
-                      </div>
-                    </div>
-                    <input type="hidden" class = "fbNum" value="${dto.fbNum}">
-                    <input type="hidden" class = "userId" value="${dto.userId}">
-                    <input type="hidden" class = "thumbnailImage" value="${pageContext.request.contextPath}/images/findBoard/${dto.thumbnailImage}">
-                    <input type="hidden" class = "timestamp" value="${dto.timestamp}">
-                    <input type="hidden" class = "sido" value="${dto.sido}">
-                    <input type="hidden" class = "gue" value="${dto.gue}">
-                    <input type="hidden" class = "dong" value="${dto.dong}">
-                    <input type="hidden" class = "addrDetail" value="${dto.addrDetail}">
-                    <input type="hidden" class = "title" value="${dto.title}">
-                    <input type="hidden" class = "contents" value="${dto.contents}">
-                    <input type="hidden" class = "sn" value="${dto.sn}">
-                    <input type="hidden" class = "lat" value="${dto.lat}">
-                    <input type="hidden" class = "lng" value="${dto.lng}">
-                    <input type="hidden" class = "hit" value="${dto.hit}">
-                    <input type="hidden" class = "chatHit" value="${dto.chatHit}">
-                    <input type="hidden" class = "fState" value="${dto.fState}">
-                  </div> -->
-              <!-- </c:forEach> -->
+              <BoardItem></BoardItem>
             </div>
           </div>
         </div>
