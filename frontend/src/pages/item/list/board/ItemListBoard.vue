@@ -1,5 +1,23 @@
 <script lang="ts" setup>
 import BoardItem from "./item/BoardItem.vue";
+import { reactive } from "vue";
+export interface Item {
+  id: number;
+  category: { master: string; detail?: string };
+  title: string;
+  address: { dong: string; detail?: string };
+  hit: number;
+}
+
+const items: Item[] = reactive([
+  {
+    id: 1,
+    category: { master: "무선이어폰" },
+    title: "에어팟주웠어요",
+    address: { dong: "성수동", detail: "벤치뒤" },
+    hit: 5,
+  },
+]);
 </script>
 <template>
   <div id="layoutSidenav">
@@ -180,7 +198,9 @@ import BoardItem from "./item/BoardItem.vue";
         <div style="position: relative; bottom: 0">
           <div id="board">
             <div class="scrollarea">
-              <BoardItem></BoardItem>
+              <template v-for="item in items" :key="item.id">
+                <BoardItem :item="item" />
+              </template>
             </div>
           </div>
         </div>
