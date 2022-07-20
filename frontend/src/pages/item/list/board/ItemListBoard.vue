@@ -2,6 +2,7 @@
 import BoardItem from "./item/BoardItem.vue";
 import { reactive } from "vue";
 import BoardSearcher from "./parts/BoardSearcher.vue";
+import BoardNav from "./parts/BoardNav.vue";
 export interface Item {
   id: number;
   category: { master: string; detail?: string };
@@ -24,21 +25,10 @@ const items: Item[] = reactive([
   <div id="layoutSidenav">
     <div id="layoutSidenav_nav" class="bg-light">
       <div class="container">
-        <!-- 습득물/분실물 -->
-        <div class="row mt-1">
-          <div class="col-6 d-grid pe-1">
-            <a class="btn btn-secondary" href="#">습득물</a>
-          </div>
-          <div class="col-6 d-grid ps-1">
-            <a class="btn btn-outline-secondary" href="l_list.do">분실물</a>
-          </div>
-        </div>
-
-        <!-- 검색조건 -->
+        <BoardNav />
 
         <BoardSearcher />
 
-        <!-- 검색결과 -->
         <div style="position: relative; bottom: 0">
           <div id="board">
             <div class="scrollarea">
