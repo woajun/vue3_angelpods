@@ -21,7 +21,12 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {});
-const emit = defineEmits(["click"]);
+
+interface Emits {
+  (e: "getLatLng", latlng: { latitude: number; longitude: number }): void;
+}
+
+const emit = defineEmits<Emits>();
 
 watch(
   () => props.center,
@@ -42,7 +47,11 @@ function createMap() {
   kakao.maps.event.addListener(
     aMap,
     "click",
-    (e: kakao.maps.event.MouseEvent) => emit("click", e)
+    (e: kakao.maps.event.MouseEvent) =>
+      emit("getLatLng", {
+        latitude: e.latLng.getLat(),
+        longitude: e.latLng.getLng(),
+      })
   );
   if (props.lock) {
     aMap.setDraggable(false);

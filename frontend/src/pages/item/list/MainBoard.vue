@@ -35,6 +35,10 @@ const items: Item[] = reactive([
     hit: 5,
   },
 ]);
+
+const mapClick = function (latlng: { latitude: number; longitude: number }) {
+  console.log(latlng);
+};
 </script>
 <template>
   <div style="display: flex">
@@ -60,6 +64,7 @@ const items: Item[] = reactive([
         position: 'fixed',
         'padding-left': '480px',
       }"
+      @getLatLng="mapClick"
     >
       <KMapMarker :position="center"></KMapMarker>
 
