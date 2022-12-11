@@ -15,7 +15,24 @@ const map = ref<kakao.maps.Map | null>(null);
 provide("kMap", map);
 
 interface Props {
+  /** 맵의 중앙을 center에 위치시킨다. */
   center: { latitude: number; longitude: number };
+  /** 지도의 확대 수준을 설정한다. 1~14 */
+  level?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14;
+  /**
+   * 주어진 영역이 화면 안에 전부 나타날 수 있도록 지도의 중심 좌표와 확대 수준을 설정한다.
+   * 주어진 영역외에 추가로 padding값을 지정할 수 있다.
+   * *padding값을 지정하지 않으면 기본값으로 상하좌우 32가 적용된다.
+   */
+  bounds?:
+    | kakao.maps.LatLngBounds
+    | {
+        bounds: kakao.maps.LatLngBounds;
+        paddingTop: number;
+        paddingRight: number;
+        paddingBottom: number;
+        paddingLeft: number;
+      };
   style?: StyleValue;
   lock?: boolean;
 }
@@ -23,7 +40,12 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 
 interface Emits {
-  (e: "getLatLng", latlng: { latitude: number; longitude: number }): void;
+  /** 클릭한 위치의 kakao.maps.LatLng 객체를 반환한다.*/
+  (e: "getLatLng", latlng: kakao.maps.LatLng): void;
+  /** 지도의 중심 좌표를 반환한다. */
+  (e: "getCenter", latlng: kakao.maps.LatLng): void;
+  /** 지도의 확대 수준을 반환한다. */
+  (e: "getLevel", level: number): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -48,10 +70,10 @@ function createMap() {
     aMap,
     "click",
     (e: kakao.maps.event.MouseEvent) =>
-      emit("getLatLng", {
-        latitude: e.latLng.getLat(),
-        longitude: e.latLng.getLng(),
-      })
+      emit(
+        "getLatLng",
+        new window.kakao.maps.LatLng(e.latLng.getLat(), e.latLng.getLng())
+      )
   );
   if (props.lock) {
     aMap.setDraggable(false);
