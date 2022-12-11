@@ -7,4 +7,8 @@ export default [
     path: "/regist",
     component: () => import("../pages/item/regist/ItemRegist.vue"),
   },
+  {
+    path: "/admin",
+    component: () => import("../pages/admin/AdminIndex.vue"),
+  },
 ];

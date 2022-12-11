@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function routerPush(path: string) {
+  router.push({
+    path,
+  });
+}
+</script>
 <template>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top px-3">
     <a class="navbar-brand">Angel Pods</a>
@@ -52,6 +62,11 @@
         <li class="nav-item">
           <a class="nav-link text-white" href="../lost/write_view.jsp"
             >분실신고</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" @click="routerPush('/admin')"
+            >관리자</a
           >
         </li>
       </ul>
