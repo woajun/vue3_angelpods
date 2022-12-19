@@ -21,7 +21,7 @@ interface Item {
 }
 
 interface ItemCondition {
-  categoryID: number;
+  categoryIDs: number[];
 }
 
 export { Item, Category, LatLng, ItemCondition };

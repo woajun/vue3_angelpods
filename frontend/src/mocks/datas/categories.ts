@@ -33,3 +33,4 @@ const categories: DBCategory[] = [
 ];
 
 export default categories;
+export { DBCategory };

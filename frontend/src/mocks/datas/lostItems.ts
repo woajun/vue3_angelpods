@@ -39,3 +39,4 @@ const lostItems: DBItem[] = [
 ];
 
 export default lostItems;
+export { DBItem };
