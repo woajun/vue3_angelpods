@@ -2,9 +2,18 @@ import { Category } from "@/globals";
 import categories from "../datas/categories";
 
 const categoryService = {
-  search: (word: string) => {
+  search: (word: string): Category[][] => {
     const spacingRemoved = word.replaceAll(" ", "");
-    return categories.filter((c) => c.searchName.includes(spacingRemoved));
+
+    if (!spacingRemoved) {
+      return [];
+    }
+
+    const filtered = categories.filter((c) =>
+      c.searchName.includes(spacingRemoved)
+    );
+
+    return filtered.map((e) => categoryService.getCategory(e.id));
   },
 
   getCategory: (id: number): Category[] => {

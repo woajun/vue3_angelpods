@@ -1,5 +1,14 @@
 <script setup lang="ts">
 import AIcons from "@/components/AIcons.vue";
+import { Category } from "@/globals";
+import categoryService from "@/mocks/services/categoryService";
+import { ref, computed } from "vue";
+
+const categoryWord = ref("");
+
+const categories = computed<Category[][]>(() => {
+  return categoryService.search(categoryWord.value);
+});
 </script>
 <template>
   <form name="searchForm" action="f_search.do" method="post">
@@ -37,8 +46,15 @@ import AIcons from "@/components/AIcons.vue";
                     <th class="align-middle" style="width: 40px">카테고리</th>
                     <td>
                       <div class="input-group mt-1">
-                        <input class="form-control" />
+                        <input class="form-control" v-model="categoryWord" />
                       </div>
+                      <ul>
+                        <li v-for="(cList, i) in categories" :key="i">
+                          <span v-for="(c, idx) in cList" :key="c.id">
+                            <span v-if="idx !== 0">></span>{{ c.name }}
+                          </span>
+                        </li>
+                      </ul>
                     </td>
                   </tr>
                   <tr>
