@@ -1,4 +1,11 @@
-const categories = [
+interface DBCategory {
+  id: number;
+  parent: number | null;
+  name: string;
+  searchName: string;
+}
+
+const categories: DBCategory[] = [
   {
     id: 1,
     parent: null,

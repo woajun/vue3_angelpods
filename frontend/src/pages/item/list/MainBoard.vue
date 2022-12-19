@@ -20,8 +20,9 @@ function routerPush(path: string) {
 }
 
 const center = ref<LatLng>({ latitude: 37.566826, longitude: 126.9786567 });
-const condition: ItemCondition = { categoryID: 1 };
+const condition: ItemCondition = { categoryID: 3 };
 const items = reactive<Item[]>(itemService.getLostItems(condition));
+console.log(items);
 
 const mapClick = function (latlng: LatLng) {
   console.log(latlng);
