@@ -34,40 +34,10 @@ import AIcons from "@/components/AIcons.vue";
               >
                 <tbody>
                   <tr>
-                    <th class="align-middle" style="width: 40px">분류</th>
+                    <th class="align-middle" style="width: 40px">카테고리</th>
                     <td>
                       <div class="input-group mt-1">
-                        <select
-                          id="cNum"
-                          name="cNum"
-                          class="form-select"
-                          required
-                        >
-                          <option selected value="%">대분류</option>
-                          <!-- <c:forEach items="${cList}" var="cDto">
-                                    <option value="${cDto.cNum}">
-                                      ${cDto.name}
-                                    </option>
-                                  </c:forEach> -->
-                        </select>
-                        <select
-                          id="cdNum"
-                          name="cdNum"
-                          class="form-select"
-                          required
-                        >
-                          <option selected value="%">소분류</option>
-                          <!-- <c:forEach items="${cdList}" var="cdDto">
-                                    <option
-                                      class="cdItems"
-                                      value="${cdDto.cdNum}"
-                                      label="${cdDto.name}"
-                                      hidden="true"
-                                    >
-                                      ${cdDto.cNum}/${cdDto.needSN}
-                                    </option>
-                                  </c:forEach> -->
-                        </select>
+                        <input class="form-control" />
                       </div>
                     </td>
                   </tr>
@@ -82,11 +52,6 @@ import AIcons from "@/components/AIcons.vue";
                           required
                         >
                           <option selected value="%">시/도</option>
-                          <!-- <c:forEach items="${area}" var="area">
-                                    <option value="${area.sido}">
-                                      ${area.sido}
-                                    </option>
-                                  </c:forEach> -->
                         </select>
                         <select
                           id="areaGue"
@@ -95,16 +60,6 @@ import AIcons from "@/components/AIcons.vue";
                           required
                         >
                           <option selected value="%">구/군</option>
-                          <!-- <c:forEach items="${area}" var="area">
-                                    <option
-                                      class="gueItems"
-                                      value="${area.gue}"
-                                      label="${area.gue}"
-                                      hidden="true"
-                                    >
-                                      ${area.sido}/${area.gue}
-                                    </option>
-                                  </c:forEach> -->
                         </select>
                         <select
                           id="areaDong"
@@ -113,16 +68,6 @@ import AIcons from "@/components/AIcons.vue";
                           required
                         >
                           <option selected value="%">동/읍</option>
-                          <!-- <c:forEach items="${area}" var="area">
-                                    <option
-                                      class="dongItems"
-                                      value="${area.dong}"
-                                      label="${area.dong}"
-                                      hidden="true"
-                                    >
-                                      ${area.sido}/${area.gue}/${area.dong}
-                                    </option>
-                                  </c:forEach> -->
                         </select>
                       </div>
                     </td>
