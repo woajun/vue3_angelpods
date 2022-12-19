@@ -40,11 +40,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 
 interface Emits {
-  /** 클릭한 위치의 kakao.maps.LatLng 객체를 반환한다.*/
-  (e: "getLatLng", latlng: kakao.maps.LatLng): void;
-  /** 지도의 중심 좌표를 반환한다. */
+  (e: "getLatLng", latlng: { latitude: number; longitude: number }): void;
   (e: "getCenter", latlng: kakao.maps.LatLng): void;
-  /** 지도의 확대 수준을 반환한다. */
   (e: "getLevel", level: number): void;
 }
 
@@ -70,10 +67,10 @@ function createMap() {
     aMap,
     "click",
     (e: kakao.maps.event.MouseEvent) =>
-      emit(
-        "getLatLng",
-        new window.kakao.maps.LatLng(e.latLng.getLat(), e.latLng.getLng())
-      )
+      emit("getLatLng", {
+        latitude: e.latLng.getLat(),
+        longitude: e.latLng.getLng(),
+      })
   );
   if (props.lock) {
     aMap.setDraggable(false);
