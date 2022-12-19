@@ -2,13 +2,16 @@
 import AIcons from "@/components/AIcons.vue";
 import { Category } from "@/globals";
 import categoryService from "@/mocks/services/categoryService";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 
-const categoryWord = ref("");
+// computed를 사용하면 한글 입력시 한 글자가 모두 채워져야 검색이 됨.
+const categories = ref<Category[][]>([]);
 
-const categories = computed<Category[][]>(() => {
-  return categoryService.search(categoryWord.value);
-});
+const doSearchCategories = (e: Event) => {
+  const word = (e.target as HTMLInputElement).value;
+
+  categories.value = categoryService.search(word);
+};
 </script>
 <template>
   <form name="searchForm" action="f_search.do" method="post">
@@ -46,7 +49,10 @@ const categories = computed<Category[][]>(() => {
                     <th class="align-middle" style="width: 40px">카테고리</th>
                     <td>
                       <div class="input-group mt-1">
-                        <input class="form-control" v-model="categoryWord" />
+                        <input
+                          class="form-control"
+                          @input="doSearchCategories"
+                        />
                       </div>
                       <ul>
                         <li v-for="(cList, i) in categories" :key="i">
