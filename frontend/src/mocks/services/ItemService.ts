@@ -1,10 +1,12 @@
-interface Condition {
-  category: number;
-}
+import { ItemCondition, Item } from "@/globals";
+import lostItems from "../datas/lostItems";
 
 const itemService = {
-  getLostItems: (conditions: Condition[]) => {
-    return conditions;
+  getLostItems: (condition: ItemCondition) => {
+    return lostItems.filter(
+      (i: Item) =>
+        i.category.findIndex((c) => c.id === condition.categoryID) > -1
+    );
   },
 };
 

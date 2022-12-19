@@ -8,13 +8,8 @@ import SideBoard from "./parts/SideBoard.vue";
 import BoardNav from "./parts/BoardNav.vue";
 import BoardItem from "./parts/BoardItem.vue";
 import BoardSearcher from "./parts/BoardSearcher.vue";
-export interface Item {
-  id: number;
-  category: { master: string; detail?: string };
-  title: string;
-  address: { dong: string; detail?: string };
-  hit: number;
-}
+import itemService from "@/mocks/services/ItemService";
+import { Item, LatLng, ItemCondition } from "@/globals";
 
 const router = useRouter();
 
@@ -24,19 +19,11 @@ function routerPush(path: string) {
   });
 }
 
-const center = ref({ latitude: 37.566826, longitude: 126.9786567 });
+const center = ref<LatLng>({ latitude: 37.566826, longitude: 126.9786567 });
+const condition: ItemCondition = { categoryID: 1 };
+const items = reactive<Item[]>(itemService.getLostItems(condition));
 
-const items: Item[] = reactive([
-  {
-    id: 1,
-    category: { master: "무선이어폰" },
-    title: "에어팟주웠어요",
-    address: { dong: "성수동", detail: "벤치뒤" },
-    hit: 5,
-  },
-]);
-
-const mapClick = function (latlng: { latitude: number; longitude: number }) {
+const mapClick = function (latlng: LatLng) {
   console.log(latlng);
 };
 </script>

@@ -1,4 +1,6 @@
-const lostItems = [
+import { Item } from "@/globals";
+
+const lostItems: Item[] = [
   {
     id: 1,
     category: [
@@ -10,7 +12,7 @@ const lostItems = [
     img: "",
     address: "서울시 응봉동",
     detail: "",
-    coords: { lat: 37.552750666861805, lng: 127.03128847657167 },
+    latlng: { latitude: 37.552750666861805, longitude: 127.03128847657167 },
     chat: 5,
     date: "2022-12-19 15:33:27",
   },
@@ -22,10 +24,10 @@ const lostItems = [
       { id: 4, name: "3세대" },
     ],
     title: "3세대 에어팟",
-    imt: "",
+    img: "",
     address: "서울시 왕십리동",
     detail: "",
-    coords: { lat: 37.55701406375508, lng: 127.0333868393793 },
+    latlng: { latitude: 37.55701406375508, longitude: 127.0333868393793 },
     chat: 9,
     date: "2022-12-19 16:32:01",
   },
