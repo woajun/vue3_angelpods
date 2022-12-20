@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { Item } from "@/globals";
 import { defineProps } from "vue";
-import type { Item } from "../MainBoard.vue";
 
 interface Props {
   item: Item;
@@ -15,23 +15,25 @@ defineProps<Props>();
       </div>
       <div class="col-9 ps-2">
         <div class="d-flex align-items-center justify-content-between">
-          <small class="text-muted overflow" style="width: 160px; height: 20px">
-            {{ item.category.master }} <span> &#183; </span>
-            {{ item.category.detail }} </small
-          ><br />
+          <small class="text-muted overflow" style="width: 200px; height: 20px">
+            <span v-for="(c, idx) in item.categories" :key="c.id">
+              <span v-if="idx !== 0">></span>{{ c.name }}
+            </span>
+          </small>
+          <br />
           <small class="date text-muted"></small>
         </div>
         <strong class="overflow" style="width: 240px; height: 20px">
           {{ item.title }}
         </strong>
         <div class="d-flex align-items-center justify-content-between">
-          <small class="text-muted">{{ item.address.dong }} </small><br />
+          <small class="text-muted">{{ item.address }} </small><br />
         </div>
         <small class="overflow" style="width: 240px; height: 20px">
-          {{ item.address.detail }}
+          {{ item.detail }}
         </small>
         <div class="d-flex align-items-center justify-content-between my-1">
-          <small class="text-muted">채팅 {{ item.hit }}</small>
+          <small class="text-muted">채팅 {{ item.chat }}</small>
           <button
             class="btn btn-sm btn-outline-secondary me-1"
             onclick="location.href=`f_content_view.do?fbNum=${item.id}`"

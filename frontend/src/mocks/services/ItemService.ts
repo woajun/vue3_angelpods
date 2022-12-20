@@ -5,7 +5,7 @@ import categoryService from "./categoryService";
 function convertDBItemToItem(dbItems: DBItem[]) {
   return dbItems.map((item) => ({
     id: item.id,
-    category: categoryService.getCategory(item.categoryID),
+    categories: categoryService.getCategory(item.categoryID),
     title: item.title,
     img: item.img,
     address: item.address,

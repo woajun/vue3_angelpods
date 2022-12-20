@@ -10,7 +10,7 @@ interface Category {
 
 interface Item {
   id: number;
-  category: Category[];
+  categories: Category[];
   title: string;
   img: string;
   address: string;
