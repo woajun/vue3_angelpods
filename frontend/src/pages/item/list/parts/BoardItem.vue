@@ -6,6 +6,20 @@ interface Props {
   item: Item;
 }
 defineProps<Props>();
+
+function formatDate(date: Date): string {
+  const now = new Date();
+  const diffTime = now.getTime() - date.getTime();
+
+  const diffSeconds = Math.floor(diffTime / 1000);
+  console.log(diffSeconds);
+  const diffMinutes = Math.floor(diffTime / (1000 * 60));
+  console.log(diffMinutes);
+  const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+  console.log(diffHours);
+
+  return "";
+}
 </script>
 <template>
   <div class="boardItem list-group-item list-group-item-action py-1 mb-1">
@@ -26,6 +40,7 @@ defineProps<Props>();
         <strong class="overflow" style="width: 240px; height: 20px">
           {{ item.title }}
         </strong>
+        {{ formatDate(item.date) }}
         <div class="d-flex align-items-center justify-content-between">
           <small class="text-muted">{{ item.address }} </small><br />
         </div>

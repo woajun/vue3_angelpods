@@ -17,7 +17,7 @@ interface Item {
   detail: string;
   latlng: LatLng;
   chat: number;
-  date: string;
+  date: Date;
 }
 
 interface ItemCondition {

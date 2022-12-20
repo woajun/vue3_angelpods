@@ -12,7 +12,7 @@ function convertDBItemToItem(dbItems: DBItem[]) {
     detail: item.detail,
     latlng: { latitude: item.latitude, longitude: item.longitude },
     chat: item.chat,
-    date: item.date,
+    date: new Date(item.date),
   }));
 }
 
