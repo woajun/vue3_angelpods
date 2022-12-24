@@ -22,7 +22,6 @@ function routerPush(path: string) {
 const center = ref<LatLng>({ latitude: 37.566826, longitude: 126.9786567 });
 const condition: ItemCondition = { categoryIDs: [3] };
 const items = reactive<Item[]>(itemService.getLostItems(condition));
-console.log(items);
 
 const mapClick = function (latlng: LatLng) {
   console.log(latlng);
@@ -32,16 +31,12 @@ const mapClick = function (latlng: LatLng) {
   <div style="display: flex">
     <SideBoard>
       <BoardNav />
-
       <BoardSearcher />
-
-      <div style="position: relative; bottom: 0">
-        <div id="board">
-          <div class="scrollarea">
-            <template v-for="item in items" :key="item.id">
-              <BoardItem :item="item" />
-            </template>
-          </div>
+      <div class="board">
+        <div class="scrollarea">
+          <template v-for="item in items" :key="item.id">
+            <BoardItem :item="item" />
+          </template>
         </div>
       </div>
     </SideBoard>
@@ -55,7 +50,6 @@ const mapClick = function (latlng: LatLng) {
       @getLatLng="mapClick"
     >
       <KMapMarker :position="center"></KMapMarker>
-
       <!-- 현위치 버튼 -->
       <button
         id="curPositionBtn"
@@ -66,7 +60,6 @@ const mapClick = function (latlng: LatLng) {
         현위치
         <AIcons type="location" />
       </button>
-
       <!-- 글쓰기 버튼 -->
       <button
         id="btn_write"
@@ -106,11 +99,12 @@ const mapClick = function (latlng: LatLng) {
   box-shadow: 0 0 0 0.25rem rgba(255, 208, 38, 0.5);
 }
 
-#board {
+.board {
+  position: relative;
+  bottom: 0;
   display: flex;
   width: 100%;
   height: 75vh;
-  height: -webkit-fill-available;
   max-height: 75vh;
   overflow-y: hidden;
 }
