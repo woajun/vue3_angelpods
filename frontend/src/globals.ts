@@ -8,9 +8,11 @@ interface Category {
   name: string;
 }
 
+type Categories = Category[];
+
 interface Item {
   id: number;
-  categories: Category[];
+  categories: Categories;
   title: string;
   img: string;
   address: string;
@@ -24,4 +26,4 @@ interface ItemCondition {
   categoryIDs: number[];
 }
 
-export { Item, Category, LatLng, ItemCondition };
+export { Item, Categories, LatLng, ItemCondition };

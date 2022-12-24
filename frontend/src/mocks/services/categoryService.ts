@@ -1,9 +1,9 @@
-import { Category } from "@/globals";
+import { Categories } from "@/globals";
 import categoryRepository from "../repositories/categoryRepository";
 
 const categoryService = {
   categoryRepository: categoryRepository,
-  search: (word: string): Category[][] => {
+  search: function (word: string): Categories[] {
     const spacingRemoved = word.replaceAll(" ", "");
 
     if (!spacingRemoved) {
@@ -12,11 +12,11 @@ const categoryService = {
 
     const filtered = categoryRepository.findBySearchName(spacingRemoved);
 
-    return filtered.map((e) => categoryService.getCategory(e.id));
+    return filtered.map((e) => this.getCategory(e.id));
   },
 
-  getCategory: (id: number): Category[] => {
-    const result: Category[] = [];
+  getCategory: (id: number): Categories => {
+    const result: Categories = [];
 
     let target: number | null = id;
     let flag = true;
