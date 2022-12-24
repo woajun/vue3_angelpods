@@ -1,7 +1,8 @@
 import { Category } from "@/globals";
-import categories from "../datas/categories";
+import categoryRepository from "../repositories/categoryRepository";
 
 const categoryService = {
+  categoryRepository: categoryRepository,
   search: (word: string): Category[][] => {
     const spacingRemoved = word.replaceAll(" ", "");
 
@@ -9,9 +10,7 @@ const categoryService = {
       return [];
     }
 
-    const filtered = categories.filter((c) =>
-      c.searchName.includes(spacingRemoved)
-    );
+    const filtered = categoryRepository.findBySearchName(spacingRemoved);
 
     return filtered.map((e) => categoryService.getCategory(e.id));
   },
@@ -22,9 +21,14 @@ const categoryService = {
     let target: number | null = id;
     let flag = true;
     while (flag) {
-      const found = categories.find((c) => c.id === target);
+      if (!target) {
+        flag = false;
+        break;
+      }
 
-      if (found === undefined) {
+      const found = categoryRepository.findById(target);
+
+      if (!found) {
         flag = false;
         break;
       }
